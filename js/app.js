@@ -5,13 +5,25 @@
 'use strict';
 
 const GAME_HOURS = 3;
-const ANSWERS = {
-  admission: ['людина', 'чоловік', 'human'],
-  login: ['сокіл', 'сокил', 'sokil'],
-  password: ['1947'],
-  pin: '214753',
-  finalCode: ['2604', 'x-2604', 'х-2604'],
+
+/* Відповіді зберігаються як SHA-256-хеші — у відкритому коді сайту
+   їх не підглянути (важливо для публічного хостингу, напр. GitHub Pages).
+   Згенерувати новий хеш: node -e "console.log(require('crypto').createHash('sha256').update('відповідь').digest('hex'))" */
+const HASHES = {
+  admission: ['6ff83abecacc653ff211850b5508f925d6d62fb98c6524634650d2bdaa485267', '42fab05fa7b043a853de0be4f1516e7d1a93bbf46dabe3e0388c56f5c9e4f116', '79a5478768d2447431a90f7f4549df735f50ad541371464c248abc7522dc3a01'],
+  login: ['bf0d358aeed8f1720d028b9b9533530b33eac1ac25a93c37c1b3a8fa4c6d5921', 'e58c835dddd245b7b3e5aad030fb65528ee1473994623f1de4dfc67fb123bac4', '9d117f3cd34688120987aae10d416ba208aa5fa22aefee92556198b1ac57518a'],
+  password: ['8eec27653c19ed078b2f3bae16ff901d16347d7917d2b8e2317914e2437bf324'],
+  finalCode: ['6dd6d77794056ba92bc53c43a5dd1b0149d7e88e4273e880d693baec4ff45860', 'bb6bdb0c73ceb13ee7074dcdd2af0d3c652b3a657bc8d343fbf336064c8f29ba', '26eb51352cab37e6c6ca1c476a4ea172d20814d6a1a89097dbfaace21695abdf'],
+  hostKey: ['01d85a117ed108b491612374331112b338b6be3a978261f0a01fd9de57cbb6be'],
 };
+
+async function sha256hex(s) {
+  const buf = await crypto.subtle.digest('SHA-256', new TextEncoder().encode(s));
+  return [...new Uint8Array(buf)].map((b) => b.toString(16).padStart(2, '0')).join('');
+}
+async function matches(value, group) {
+  return HASHES[group].includes(await sha256hex(norm(value)));
+}
 /* Лише одиночні емодзі (без ZWJ-послідовностей) — інакше Windows
    малює їх двома гліфами і виходить «нашарування». */
 const AVATARS = [
@@ -38,7 +50,9 @@ const save = (patch) => {
   localStorage.setItem('dc3', JSON.stringify(s));
   return s;
 };
-const isHost = new URLSearchParams(location.search).has('host');
+/* Режим ведучого вмикається лише правильним ключем: ?host=<ключ> */
+let isHost = false;
+const hostParam = new URLSearchParams(location.search).get('host');
 
 /* ---------- Роутер ---------- */
 const SCREENS = ['landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved'];
@@ -100,9 +114,9 @@ $('#regForm').addEventListener('submit', (e) => {
 });
 
 /* ---------- Завдання-допуск ---------- */
-$('#taskForm').addEventListener('submit', (e) => {
+$('#taskForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (ANSWERS.admission.includes(norm($('#taskAnswer').value))) {
+  if (await matches($('#taskAnswer').value, 'admission')) {
     save({ admitted: true });
     $('#taskForm').hidden = true;
     $('#taskFail').hidden = true;
@@ -200,12 +214,11 @@ function bootTerminal() {
   });
 }
 
-$('#termForm').addEventListener('submit', (e) => {
+$('#termForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  const login = norm($('#termLogin').value);
-  const pass = norm($('#termPass').value);
   const log = $('#termLog');
-  if (ANSWERS.login.includes(login) && ANSWERS.password.includes(pass)) {
+  const ok = (await matches($('#termLogin').value, 'login')) && (await matches($('#termPass').value, 'password'));
+  if (ok) {
     save({ gateOpen: true });
     $('#termForm').hidden = true;
     typeLines(log, [...BOOT_LINES, '', '> ДОСТУП НАДАНО.', '> ВІДКРИВАЮ СПРАВУ № 003…'], () => {
@@ -261,9 +274,9 @@ $('#pinBtn').addEventListener('click', () => {
 });
 
 /* ---------- Фінал ---------- */
-$('#finForm').addEventListener('submit', (e) => {
+$('#finForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-  if (ANSWERS.finalCode.includes(norm($('#finInput').value))) {
+  if (await matches($('#finInput').value, 'finalCode')) {
     save({ solvedAt: Date.now() });
     $('#solvedForm').hidden = true;
     $('#solvedDone').hidden = false;
@@ -278,7 +291,10 @@ $('#finForm').addEventListener('submit', (e) => {
 });
 
 /* ---------- Панель ведучого ---------- */
-if (isHost) {
+async function initHost() {
+  if (!hostParam || !crypto.subtle) return;
+  if (!(await matches(hostParam, 'hostKey'))) return;
+  isHost = true;
   $('#hostbar').hidden = false;
   $('#hostStart').addEventListener('click', () => {
     save({ startedAt: Date.now() });
@@ -289,8 +305,10 @@ if (isHost) {
     location.hash = '#/';
     location.reload();
   });
+  route(); // перерахувати охорону маршрутів уже як ведучий
 }
 
 /* ---------- Старт ---------- */
 renderAvatars();
 route();
+initHost();
