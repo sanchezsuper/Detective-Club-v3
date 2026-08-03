@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Рамка речдоків — Детективний клуб</title>
+<style>
+  :root {
+    --bg: #e7dfcd; --surface: #f8f5ee; --ink: #2b2620; --muted: #6f6650;
+    --line: #cfc4a8; --stamp: #a8322a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink); margin: 0; padding: 2rem 1rem 4rem;
+    font-family: 'Courier New', Courier, monospace;
+  }
+  h1 { font-size: 1.2rem; text-transform: uppercase; letter-spacing: .1em; text-align: center; }
+  p.hint { text-align: center; color: var(--muted); font-size: .85rem; max-width: 46rem; margin: .3rem auto 2rem; font-family: Georgia, serif; }
+  .row { display: flex; flex-wrap: wrap; gap: 2rem; justify-content: center; }
+  .slot { display: flex; flex-direction: column; align-items: center; gap: .8rem; }
+  .slot canvas {
+    width: 340px; height: auto; box-shadow: 0 6px 18px rgba(40,30,10,.35);
+    cursor: pointer;
+  }
+  .slot canvas.dragover { outline: 3px dashed var(--stamp); }
+  .slot button {
+    background: var(--stamp); color: var(--surface); border: none; cursor: pointer;
+    font-family: 'Courier New', monospace; text-transform: uppercase;
+    letter-spacing: .15em; font-size: .75rem; padding: .6rem 1.2rem;
+  }
+  .slot button:disabled { background: var(--line); cursor: default; }
+  .slot input { display: none; }
+  .slot .label { font-size: .72rem; letter-spacing: .15em; color: var(--muted); text-transform: uppercase; }
+</style>
+</head>
+<body>
+
+<h1>Рамка речдоків · справа № 003</h1>
+<p class="hint">Клікніть по полароїду або перетягніть на нього свою картинку (PNG/JPG, найкраще квадратну). Потім «Зберегти PNG» — файл готовий до друку. Все відбувається у вашому браузері, нікуди нічого не завантажується.</p>
+
+<div class="row" id="row"></div>
+
+<script>
+'use strict';
+
+const SLOTS = [
+  { n: '№ 1', title: 'РЕЧДОК № 1 · ГОДИННИК ВЛАСНИКА', file: 'rechdok-1-hodynnyk' },
+  { n: '№ 2', title: 'РЕЧДОК № 2 · ПІДЖАК, СЛІДИ КРОВІ', file: 'rechdok-2-pidzhak' },
+  { n: '№ 3', title: 'РЕЧДОК № 3 · ЗБРОЯ З МІСЦЯ ПОДІЇ', file: 'rechdok-3-zbroya' },
+];
+
+// Розміри фінального PNG (2x для друку)
+const W = 1000, PAD = 44, PHOTO = W - PAD * 2, CAP = 200, H = PAD + PHOTO + CAP;
+
+function drawFrame(ctx, img, slot) {
+  ctx.setTransform(1, 0, 0, 1, 0, 0); // жорсткий скид трансформацій
+  // тло рамки
+  ctx.fillStyle = '#f8f5ee';
+  ctx.fillRect(0, 0, W, H);
+  // зона фото
+  ctx.fillStyle = '#efe7d4';
+  ctx.fillRect(PAD, PAD, PHOTO, PHOTO);
+  if (img) {
+    // вписуємо як cover з центруванням
+    const s = Math.max(PHOTO / img.width, PHOTO / img.height);
+    const w = img.width * s, h = img.height * s;
+    ctx.save();
+    ctx.beginPath();
+    ctx.rect(PAD, PAD, PHOTO, PHOTO);
+    ctx.clip();
+    ctx.drawImage(img, PAD + (PHOTO - w) / 2, PAD + (PHOTO - h) / 2, w, h);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#b9ab8d';
+    ctx.font = '28px "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('клікніть або перетягніть фото', W / 2, PAD + PHOTO / 2);
+    ctx.textAlign = 'left';
+  }
+  // тонка лінія навколо фото
+  ctx.strokeStyle = '#ddd3bd';
+  ctx.lineWidth = 2;
+  ctx.strokeRect(PAD, PAD, PHOTO, PHOTO);
+
+  // бирка «№ N» у верхньому правому куті фото
+  ctx.save();
+  ctx.translate(W - PAD - 155, PAD + 100);
+  ctx.rotate(6 * Math.PI / 180);
+  ctx.fillStyle = '#f3e9b8';
+  ctx.strokeStyle = '#a8322a';
+  ctx.lineWidth = 4;
+  ctx.fillRect(-90, -40, 180, 80);
+  ctx.strokeRect(-90, -40, 180, 80);
+  ctx.beginPath();
+  ctx.arc(-66, 0, 9, 0, Math.PI * 2);
+  ctx.stroke();
+  ctx.fillStyle = '#a8322a';
+  ctx.font = 'bold 44px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.textBaseline = 'middle';
+  ctx.fillText(slot.n, 14, 2);
+  ctx.restore();
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.textAlign = 'left';
+  ctx.textBaseline = 'alphabetic';
+
+  // підписи
+  ctx.fillStyle = '#2b2620';
+  ctx.font = 'bold 36px "Courier New", monospace';
+  try { ctx.letterSpacing = '4px'; } catch (e) {}
+  ctx.fillText(slot.title, PAD, PAD + PHOTO + 88);
+  ctx.fillStyle = '#a8322a';
+  ctx.font = '26px "Courier New", monospace';
+  try { ctx.letterSpacing = '8px'; } catch (e) {}
+  ctx.fillText('НЕ ТОРКАТИСЬ', PAD, PAD + PHOTO + 140);
+  try { ctx.letterSpacing = '0px'; } catch (e) {}
+}
+
+SLOTS.forEach((slot) => {
+  const wrap = document.createElement('div');
+  wrap.className = 'slot';
+  const canvas = document.createElement('canvas');
+  canvas.width = W;
+  canvas.height = H;
+  const input = document.createElement('input');
+  input.type = 'file';
+  input.accept = 'image/*';
+  const btn = document.createElement('button');
+  btn.textContent = 'Зберегти PNG';
+  btn.disabled = true;
+  const lbl = document.createElement('span');
+  lbl.className = 'label';
+  lbl.textContent = slot.title;
+  wrap.append(canvas, lbl, btn, input);
+  document.getElementById('row').appendChild(wrap);
+
+  const ctx = canvas.getContext('2d');
+  let img = null;
+  drawFrame(ctx, null, slot);
+
+  function setFile(file) {
+    if (!file || !file.type.startsWith('image/')) return;
+    const url = URL.createObjectURL(file);
+    const im = new Image();
+    im.onload = () => {
+      img = im;
+      drawFrame(ctx, img, slot);
+      btn.disabled = false;
+      URL.revokeObjectURL(url);
+    };
+    im.src = url;
+  }
+
+  canvas.addEventListener('click', () => input.click());
+  input.addEventListener('change', () => setFile(input.files[0]));
+  canvas.addEventListener('dragover', (e) => { e.preventDefault(); canvas.classList.add('dragover'); });
+  canvas.addEventListener('dragleave', () => canvas.classList.remove('dragover'));
+  canvas.addEventListener('drop', (e) => {
+    e.preventDefault();
+    canvas.classList.remove('dragover');
+    setFile(e.dataTransfer.files[0]);
+  });
+  btn.addEventListener('click', () => {
+    const a = document.createElement('a');
+    a.download = slot.file + '.png';
+    a.href = canvas.toDataURL('image/png');
+    a.click();
+  });
+});
+</script>
+</body>
+</html>
