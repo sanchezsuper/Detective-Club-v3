@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Детективний клуб — справа № 003</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🕵️</text></svg>">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- Панель ведучого (видима лише з ?host=1) -->
+<div id="hostbar" hidden>
+  <span class="hb-label">ВЕДУЧИЙ</span>
+  <button id="hostStart">СТАРТ</button>
+  <button id="hostReset">Скинути гру</button>
+  <nav>
+    <a href="#/">лендінг</a><a href="#/register">реєстрація</a><a href="#/task">допуск</a><a href="#/cabinet">кабінет</a><a href="#/terminal">термінал</a><a href="#/dossier">досьє</a><a href="#/phone">телефон</a><a href="#/denied">заборонено</a><a href="#/solved">фінал</a><a href="#/news">новина</a>
+  </nav>
+</div>
+
+<!-- ЕКРАН: Лендінг -->
+<section id="screen-landing" class="screen paper-world" hidden>
+  <div class="sheet cover-sheet">
+    <span class="stamp big">Секретно</span>
+    <div class="emblem">✦</div>
+    <p class="case-no">Детективний клуб · вх. № 003-А</p>
+    <h1>Набір у спецгрупу<br>по справі № 003</h1>
+    <p class="lede">Слідство зайшло в глухий кут. Поліція закрила справу. Нам потрібні детективи, яким можна довіряти.</p>
+    <p class="lede warn">Розголошення карається. Долучаючись, ви приймаєте правила Клубу.</p>
+    <button class="btn-stamp" data-go="#/register">Подати заявку</button>
+  </div>
+</section>
+
+<!-- ЕКРАН: Реєстрація -->
+<section id="screen-register" class="screen paper-world" hidden>
+  <div class="sheet">
+    <p class="case-no">Анкета кандидата · форма 2-Д</p>
+    <h2>Реєстрація детектива</h2>
+    <form id="regForm">
+      <label class="fld">
+        <span>Ім'я детектива</span>
+        <input type="text" id="regName" maxlength="24" autocomplete="off" required placeholder="напр. Ірина Коваль">
+      </label>
+      <div class="fld">
+        <span>Оберіть аватар</span>
+        <div class="avatars" id="avatarGrid"></div>
+      </div>
+      <button type="submit" class="btn-stamp">Надіслати заявку</button>
+    </form>
+  </div>
+</section>
+
+<!-- ЕКРАН: Завдання-допуск -->
+<section id="screen-task" class="screen paper-world" hidden>
+  <div class="sheet">
+    <p class="case-no">Перевірка кандидата · допуск</p>
+    <h2>Заявку прийнято. Пройдіть перевірку</h2>
+    <p class="task-text">Питання з архіву Клубу (відповідає кожен сам):</p>
+    <blockquote class="riddle">«Вранці — на чотирьох, удень — на двох, увечері — на трьох. Хто це?»</blockquote>
+    <form id="taskForm">
+      <label class="fld">
+        <span>Відповідь</span>
+        <input type="text" id="taskAnswer" autocomplete="off" required>
+      </label>
+      <button type="submit" class="btn-stamp">Відповісти</button>
+      <p class="fail-msg" id="taskFail" hidden>Невірно. Подумайте ще — Клуб нікуди не поспішає.</p>
+    </form>
+    <div id="taskGranted" class="granted" hidden>
+      <span class="stamp big granted-stamp">Допуск надано</span>
+      <button class="btn-stamp" data-go="#/cabinet">Увійти в кабінет</button>
+    </div>
+  </div>
+</section>
+
+<!-- ЕКРАН: Кабінет детектива -->
+<section id="screen-cabinet" class="screen paper-world" hidden>
+  <div class="cabinet">
+    <div class="sheet id-card">
+      <p class="case-no">Посвідчення співробітника</p>
+      <div class="id-row">
+        <span class="id-avatar" id="cabAvatar"></span>
+        <div>
+          <p class="id-name" id="cabName"></p>
+          <p class="id-rank">звання: СТАЖЕР · справа № 003</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="sheet">
+      <p class="case-no">Склад групи</p>
+      <ul class="lobby" id="lobbyList"></ul>
+      <p class="hint-dim">Інші детективи з'являтимуться тут у міру проходження допуску.</p>
+    </div>
+
+    <div class="sheet timer-sheet">
+      <p class="case-no">Стан операції</p>
+      <div id="waitBlock">
+        <p class="waiting">Очікуємо на початок операції<span class="dots"></span></p>
+        <p class="hint-dim">Старт дає керівник групи. Нікуди не йдіть.</p>
+      </div>
+      <div id="runBlock" hidden>
+        <p class="clock" id="clock">03:00:00</p>
+        <p class="hint-dim" id="clockNote">До кінця операції. Після нуля гра триває — падає рейтинг агентства.</p>
+        <div id="briefing">
+          <p class="case-no">Оперативне зведення</p>
+          <p>Замовниця чекає результату. Всі матеріали по справі — у службовій системі. <em>Хто уважний, той знайде вхід.</em></p>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- непримітна кнопка секретного доступу -->
+  <button id="secretLock" class="secret-lock" hidden aria-label="?">🔒</button>
+</section>
+
+<!-- ЕКРАН: Термінал -->
+<section id="screen-terminal" class="screen term-world" hidden>
+  <div class="term">
+    <button id="infoBtn" class="info-btn" title="Довідка">i</button>
+    <pre id="termLog"></pre>
+    <form id="termForm" hidden>
+      <label>&gt; LOGIN: <input id="termLogin" autocomplete="off" spellcheck="false"></label>
+      <label>&gt; PASSWORD: <input id="termPass" type="password" autocomplete="off"></label>
+      <button type="submit">[ УВІЙТИ ]</button>
+    </form>
+  </div>
+
+  <!-- Довідка у стилі старих Windows -->
+  <div id="helpDlg" class="win-dlg" hidden>
+    <div class="win-title"><span>Довідка — Забули пароль?</span><button id="helpClose">✕</button></div>
+    <div class="win-body">
+      <p><b>Завдання Л (логін).</b> Агент передав список чергових по частині: <i>Северин, Осип, Кузьма, Ігор, Лесь.</i> І шепнув: «читай по перших».</p>
+      <hr>
+      <p><b>Завдання П (пароль).</b> У гербі Служби Х вибито римські знаки: <b>I&nbsp;IX&nbsp;IV&nbsp;VII</b>. Прочитай їх як одне число.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ЕКРАН: Досьє -->
+<section id="screen-dossier" class="screen paper-world" hidden>
+  <div class="sheet dossier">
+    <span class="stamp big">Цілком таємно</span>
+    <p class="case-no">Служба Х · архів · справа № 003</p>
+    <h2>Справа офіцера <span class="blk w6"></span></h2>
+
+    <div id="dossierBody">
+      <p>Майор <span class="blk w5"></span> <span class="blk w4"></span>, 12 квітня, о <span class="blk w2"></span>:<span class="blk w2"></span> знайдений <span class="blk w7"></span> за адресою: <strong class="visible-key" id="addrLine">[АДРЕСА МІСЦЯ ПОДІЇ — видима гравцям]</strong>.</p>
+      <p>Тіло та документи вивезені <span class="blk w9"></span>. Свідок: <span class="blk w5"></span>. Мотив: <span class="blk w8"></span>.</p>
+      <p>Висновок відділу: <span class="blk w9"></span> <span class="blk w6"></span> <span class="blk w7"></span>.</p>
+      <blockquote class="letter">«Поліція закрила справу за тиждень. Ніхто не шукає. Я заплачу́, скільки скажете, — тільки знайдіть, хто це зробив. — О.»</blockquote>
+      <p class="hint-dim">Речові докази досі на місці події. Виїжджайте — і тримайте цю сторінку під рукою.</p>
+    </div>
+
+    <div class="pin-panel" id="pinPanel">
+      <label>РОЗСЕКРЕТИТИ СПРАВУ · PIN:
+        <input id="pinInput" inputmode="numeric" maxlength="6" placeholder="______" autocomplete="off">
+      </label>
+      <button id="pinBtn" class="btn-stamp">Ввести</button>
+      <p class="fail-msg" id="pinFail" hidden>ВІДМОВЛЕНО. Невірний PIN. Спробу зафіксовано.</p>
+      <p class="hint-dim">PIN складається з цифр, розкиданих по доказах на місці події.</p>
+    </div>
+    <div id="secretMount"></div>
+  </div>
+</section>
+
+<!-- ЕКРАН: Телефон жертви (відкривається за QR) -->
+<section id="screen-phone" class="screen term-world" hidden>
+  <div class="phone">
+    <div class="phone-top">
+      <p class="ph-time">21:03</p>
+      <p class="ph-date">субота, 12 квітня</p>
+    </div>
+    <div class="ph-notif">
+      <p class="ph-app">☎ Виклики</p>
+      <p><b>Пропущений виклик</b> — Невідомий номер, <b>20:47</b></p>
+    </div>
+    <div class="ph-notif">
+      <p class="ph-app">✉ Повідомлення</p>
+      <p class="bubble in">Вони близько.</p>
+      <p class="bubble in">Роби як домовились.</p>
+      <p class="bubble out draft">Чернетка: «Якщо щось піде не так — годинник підкаже прав…» <i>(не надіслано)</i></p>
+    </div>
+    <div class="ph-notif">
+      <p class="ph-app">🗒 Нотатки</p>
+      <p class="mono-note">49.8░░░░, 24.0░░░░ — далі стерто</p>
+    </div>
+    <p class="hint-dim center">Телефон заблоковано. Більше нічого відкрити не вдається.</p>
+  </div>
+</section>
+
+<!-- ЕКРАН: Доступ заборонено (red herring для QR) -->
+<section id="screen-denied" class="screen denied-world" hidden>
+  <div class="denied">
+    <p class="denied-title">ДОСТУП ЗАБОРОНЕНО</p>
+    <p class="denied-sub">Спробу входу зафіксовано.<br>IP-адресу передано черговому офіцеру Служби Х.</p>
+    <p class="denied-code">код відмови: 0x00С-НЕ-ТУДИ</p>
+  </div>
+</section>
+
+<!-- ЕКРАН: Фінальний код -->
+<section id="screen-solved" class="screen paper-world" hidden>
+  <div class="sheet">
+    <p class="case-no">Завершення справи № 003</p>
+    <div id="solvedForm">
+      <h2>Доповідь керівництву</h2>
+      <p>Щоб закрити справу, введіть номер знайденого посвідчення:</p>
+      <form id="finForm">
+        <label class="fld"><span>Номер посвідчення</span>
+          <input id="finInput" autocomplete="off" placeholder="X-____">
+        </label>
+        <button type="submit" class="btn-stamp">Закрити справу</button>
+        <p class="fail-msg" id="finFail" hidden>Такого документа немає в реєстрі. Перевірте номер.</p>
+      </form>
+    </div>
+    <div id="solvedDone" class="granted" hidden>
+      <span class="stamp big granted-stamp">Справу розкрито</span>
+      <p class="solved-text">Він живий. Він сам інсценував своє вбивство — і два тижні по тому отримав нові документи. Ви — перші, хто це довів.</p>
+      <p class="solved-text">Рейтинг агентства: <b id="ratingLine">★★★★★</b></p>
+      <p class="hint-dim">Диспетчер: «Гарна робота. Відпочивайте… хоча стривайте. Дивна новина щойно в стрічці — гляньте.»</p>
+      <button class="btn-stamp" data-go="#/news">Відкрити новину</button>
+    </div>
+  </div>
+</section>
+
+<!-- ЕКРАН: Новина-епілог -->
+<section id="screen-news" class="screen paper-world" hidden>
+  <div class="sheet news">
+    <p class="news-brand">ОБЛАСНІ ВІСТІ · кримінальна хроніка</p>
+    <h2>На трасі М-06 загинув невстановлений чоловік</h2>
+    <p class="news-meta">3 травня, 09:12</p>
+    <p>Учора ввечері на 84-му кілометрі траси М-06 сталася смертельна ДТП. Водій, за попередніми даними, не впорався з керуванням. Документів при собі загиблий не мав; номерні знаки авто числяться викраденими.</p>
+    <p>Слідчих спантеличила одна деталь: наручний годинник загиблого — старий, офіцерський — зупинився від удару о <b>21:47</b>.</p>
+    <p>Особу встановлюють. Свідків просять звертатися до поліції.</p>
+    <p class="news-end">▪</p>
+  </div>
+</section>
+
+<script src="js/app.js"></script>
+</body>
+</html>
