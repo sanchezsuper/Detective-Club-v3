@@ -12,7 +12,13 @@ const ANSWERS = {
   pin: '214753',
   finalCode: ['2604', 'x-2604', 'х-2604'],
 };
-const AVATARS = ['🕵️', '🦊', '🦉', '🐺', '🦅', '🐈‍⬛', '🗝️', '♠️'];
+/* Лише одиночні емодзі (без ZWJ-послідовностей) — інакше Windows
+   малює їх двома гліфами і виходить «нашарування». */
+const AVATARS = [
+  '🕵️', '🦊', '🦉', '🐺', '🦅', '🐈', '🗝️', '♠️',
+  '👽', '🐐', '😈', '👹', '💀', '👻', '🐢', '🦖',
+  '🐙', '🦇', '🐸', '🧙', '🥷', '🤖', '🎃', '🦄',
+];
 
 /* Розсекречена частина досьє зашифрована AES-GCM ключем із PIN:
    без правильного PIN тексту фізично немає на сторінці. */
@@ -35,7 +41,7 @@ const save = (patch) => {
 const isHost = new URLSearchParams(location.search).has('host');
 
 /* ---------- Роутер ---------- */
-const SCREENS = ['landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved', 'news'];
+const SCREENS = ['landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved'];
 
 function route() {
   const hash = location.hash || '#/';
@@ -264,6 +270,8 @@ $('#finForm').addEventListener('submit', (e) => {
     const s = load();
     const overtime = s.startedAt && (s.solvedAt - s.startedAt) > GAME_HOURS * 3600 * 1000;
     $('#ratingLine').textContent = overtime ? '★★★★☆ (понаднормово)' : '★★★★★';
+    // Твіст 2: бігучий рядок «випадково» виповзає за кілька секунд
+    setTimeout(() => { $('#newsTicker').hidden = false; }, 4000);
   } else {
     $('#finFail').hidden = false;
   }

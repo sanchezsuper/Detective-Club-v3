@@ -78,12 +78,16 @@ h2 { font-size: 1.2rem; }
   font-family: var(--serif); font-size: 1rem; padding: .55rem .7rem; color: var(--ink);
 }
 
-.avatars { display: flex; flex-wrap: wrap; gap: .5rem; }
+.avatars { display: grid; grid-template-columns: repeat(auto-fill, minmax(3rem, 1fr)); gap: .5rem; }
 .avatars button {
   width: 3rem; height: 3rem; font-size: 1.4rem; cursor: pointer;
   background: var(--bg); border: 2px solid var(--line); border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  padding: 0; line-height: 1; overflow: hidden;
+  font-family: 'Segoe UI Emoji', 'Noto Color Emoji', 'Apple Color Emoji', sans-serif;
 }
-.avatars button.sel { border-color: var(--stamp); background: var(--surface2); }
+.avatars button.sel { border-color: var(--stamp); background: var(--surface2); box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--stamp); }
+.avatars button:focus-visible { outline: none; box-shadow: 0 0 0 2px var(--surface), 0 0 0 4px var(--stamp); }
 
 .riddle {
   margin: .8rem 0 1.2rem; padding: .8rem 1rem; font-style: italic;
@@ -155,9 +159,9 @@ h2 { font-size: 1.2rem; }
 }
 .term pre { margin: 0 0 1rem; white-space: pre-wrap; word-break: break-word; }
 .term form { display: flex; flex-direction: column; gap: .7rem; }
-.term label { display: flex; gap: .5rem; align-items: center; }
+.term label { display: flex; gap: .5rem; align-items: center; white-space: nowrap; }
 .term input {
-  flex: 1; background: transparent; border: none; border-bottom: 1px solid var(--term-dim);
+  flex: 1; min-width: 0; background: transparent; border: none; border-bottom: 1px solid var(--term-dim);
   color: var(--term-ink); font-family: var(--mono); font-size: .95rem; padding: .2rem .3rem;
   caret-color: var(--term-ink);
 }
@@ -265,17 +269,35 @@ h2 { font-size: 1.2rem; }
 .denied-sub { color: #b0847e; margin: 0 0 1.4rem; line-height: 1.7; }
 .denied-code { color: #6e4a44; font-size: .75rem; letter-spacing: .2em; }
 
-/* Фінал і новина */
+/* Фінал */
 .solved-text { max-width: 52ch; }
-.news { font-family: var(--serif); }
-.news-brand {
-  font-family: var(--mono); font-size: .7rem; letter-spacing: .3em; text-transform: uppercase;
-  color: var(--muted); border-bottom: 3px double var(--ink); padding-bottom: .4rem; margin: 0 0 1rem;
+
+/* Бігучий рядок «новина дня» (твіст 2) */
+.ticker {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 40;
+  display: flex; align-items: stretch;
+  background: #14100d; border-top: 3px double var(--stamp);
+  font-family: var(--mono);
+  animation: ticker-in .6s ease both;
 }
-.news h2 { font-family: var(--serif); text-transform: none; font-size: 1.5rem; letter-spacing: 0; }
-.news-meta { font-family: var(--mono); font-size: .75rem; color: var(--muted); margin: 0 0 1rem; }
-.news p { max-width: 60ch; }
-.news-end { text-align: center; color: var(--muted); }
+@keyframes ticker-in { from { transform: translateY(100%); } to { transform: none; } }
+.ticker-label {
+  flex: none; display: flex; align-items: center;
+  background: var(--stamp); color: #f6f0e2;
+  font-size: .68rem; letter-spacing: .18em; text-transform: uppercase;
+  padding: .55rem .8rem;
+}
+.ticker-track { overflow: hidden; flex: 1; display: flex; align-items: center; }
+.ticker-track .tk {
+  display: inline-block; white-space: nowrap; padding-left: 100%;
+  color: #e8e0cc; font-size: .82rem; letter-spacing: .06em;
+  animation: ticker-run 28s linear infinite;
+}
+@keyframes ticker-run { from { transform: translateX(0); } to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) {
+  .ticker { animation: none; }
+  .ticker-track .tk { animation: none; padding-left: 0; white-space: normal; padding: .4rem .8rem; }
+}
 
 /* Панель ведучого */
 #hostbar {
