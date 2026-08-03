@@ -8,19 +8,11 @@
   .polaroid {
     width: 480px; background: #f8f5ee;
     padding: 22px 22px 0; box-shadow: 0 6px 18px rgba(40,30,10,.35);
-    position: relative;
   }
   .photo { width: 436px; height: 430px; background: #efe7d4; overflow: hidden; border: 1px solid #ddd3bd; }
-  .caption {
-    height: 96px; display: flex; flex-direction: column; justify-content: center; gap: 4px;
-  }
+  .caption { height: 88px; display: flex; flex-direction: column; justify-content: center; gap: 5px; }
   .caption b { font-size: 17px; letter-spacing: .12em; color: #2b2620; }
-  .caption span { font-size: 12px; letter-spacing: .18em; color: #837a63; }
-  .case-stamp {
-    position: absolute; top: 10px; right: 14px; transform: rotate(5deg);
-    border: 2px double #a8322a; color: #a8322a; font-size: 10px;
-    letter-spacing: .2em; padding: 2px 7px; background: rgba(248,245,238,.85);
-  }
+  .caption span { font-size: 12px; letter-spacing: .3em; color: #a8322a; }
   svg { display: block; }
 </style>
 </head>
@@ -28,7 +20,6 @@
 
 <!-- ═══ РЕЧДОК 1 · ГОДИННИК (стрілки на 21:47) ═══ -->
 <div class="polaroid" id="p1">
-  <span class="case-stamp">СПРАВА № 003</span>
   <div class="photo">
     <svg viewBox="0 0 436 430" width="436" height="430">
       <rect width="436" height="430" fill="#efe7d4"/>
@@ -74,7 +65,7 @@
         <rect x="214.5" y="215" width="7" height="22" rx="3" fill="#2b2620"/>
       </g>
       <circle cx="218" cy="215" r="8" fill="#a8322a"/>
-      <!-- тріщина на склі: верхній правий край, подалі від стрілок -->
+      <!-- тріщина на склі -->
       <path d="M280 138 L266 158 L274 166" stroke="#6f6650" stroke-width="2" fill="none" opacity=".65"/>
       <path d="M266 158 L256 152" stroke="#6f6650" stroke-width="1.5" fill="none" opacity=".55"/>
       <!-- бирка речдоку -->
@@ -88,121 +79,139 @@
   </div>
   <div class="caption">
     <b>РЕЧДОК № 1 · ГОДИННИК ВЛАСНИКА</b>
-    <span>МІСЦЕ ПОДІЇ · ФОТО 12.04, 22:41 · НЕ ТОРКАТИСЬ</span>
+    <span>НЕ ТОРКАТИСЬ</span>
   </div>
 </div>
 
-<!-- ═══ РЕЧДОК 2 · ПІДЖАК З ЛЕЙБОЮ (…53 непомітно в тексті) ═══ -->
+<!-- ═══ РЕЧДОК 2 · ПІДЖАК (класичний однобортний, лейба у збільшенні) ═══ -->
 <div class="polaroid" id="p2">
-  <span class="case-stamp">СПРАВА № 003</span>
   <div class="photo">
     <svg viewBox="0 0 436 430" width="436" height="430">
       <rect width="436" height="430" fill="#efe7d4"/>
-      <ellipse cx="190" cy="400" rx="160" ry="16" fill="#e0d5ba"/>
-      <!-- піджак розгорнутий: спинка + права пола з підкладкою -->
-      <path d="M60 80 Q70 52 110 44 L150 36 Q190 60 230 36 L270 44 Q310 52 320 80 L330 240 L300 400 L80 400 L50 240 z" fill="#4a4438"/>
-      <!-- підкладка (відгорнута пола) -->
-      <path d="M190 60 L300 90 L320 250 L286 392 L190 392 z" fill="#8d7d5a"/>
-      <path d="M190 60 L300 90 L320 250 L286 392 L190 392 z" fill="none" stroke="#6f6650" stroke-width="2"/>
-      <!-- шов підкладки -->
-      <path d="M206 92 L292 116 L306 248 L278 378" stroke="#6f6650" stroke-width="1.5" stroke-dasharray="6 4" fill="none"/>
-      <!-- комір/лацкан -->
-      <path d="M110 44 L190 60 L150 130 L92 96 z" fill="#37322a"/>
-      <path d="M270 44 L190 60 L226 118 L292 84 z" fill="#37322a"/>
-      <!-- пляма крові -->
-      <path d="M96 210 q-14 -26 8 -32 q6 -18 24 -10 q20 -8 24 12 q18 8 6 26 q4 20 -18 18 q-16 12 -26 -2 q-20 2 -18 -12 z" fill="#7a2320" opacity=".85"/>
-      <circle cx="150" cy="242" r="7" fill="#7a2320" opacity=".7"/>
-      <circle cx="122" cy="252" r="4" fill="#7a2320" opacity=".6"/>
-      <!-- лейба на підкладці -->
-      <rect x="228" y="150" width="58" height="34" rx="3" fill="#f2ecd9" stroke="#6f6650"/>
-      <line x1="228" y1="158" x2="286" y2="158" stroke="#c9b98a"/>
-      <!-- лінія до збільшення -->
-      <circle cx="257" cy="167" r="34" fill="none" stroke="#a8322a" stroke-width="2" stroke-dasharray="5 4"/>
-      <line x1="283" y1="192" x2="300" y2="238" stroke="#a8322a" stroke-width="2" stroke-dasharray="5 4"/>
+      <ellipse cx="218" cy="252" rx="168" ry="16" fill="#e0d5ba"/>
+      <g>
+        <!-- рукави -->
+        <path d="M92 96 Q76 102 72 122 L58 236 Q57 246 66 248 L104 254 Q112 255 113 246 L128 132 z" fill="#37322a"/>
+        <path d="M344 96 Q360 102 364 122 L378 236 Q379 246 370 248 L332 254 Q324 255 323 246 L308 132 z" fill="#37322a"/>
+        <!-- корпус: ліва і права поли -->
+        <path d="M218 74 L188 64 L120 90 Q108 96 106 112 L112 258 Q112 266 122 266 L212 266 L216 190 z" fill="#3f3a30"/>
+        <path d="M218 74 L248 64 L316 90 Q328 96 330 112 L324 258 Q324 266 314 266 L224 266 L220 190 z" fill="#453f34"/>
+        <!-- перекриття піл (однобортний, застібнутий) -->
+        <path d="M218 74 L246 168 L242 266 L204 266 L206 168 z" fill="#3f3a30"/>
+        <!-- лацкани з горловиною -->
+        <path d="M218 74 L186 64 L160 128 L204 176 z" fill="#332f27"/>
+        <path d="M218 74 L250 64 L276 128 L232 176 z" fill="#332f27"/>
+        <!-- комір -->
+        <path d="M186 64 L218 52 L250 64 L232 88 L218 80 L204 88 z" fill="#2b2723"/>
+        <!-- ґудзики -->
+        <circle cx="222" cy="196" r="5" fill="#1f1c17"/>
+        <circle cx="222" cy="230" r="5" fill="#1f1c17"/>
+        <!-- нагрудна кишеня і нижні кишені з клапанами -->
+        <rect x="136" y="140" width="34" height="6" rx="2" fill="#2b2723"/>
+        <rect x="126" y="216" width="52" height="12" rx="3" fill="#2b2723"/>
+        <rect x="258" y="216" width="52" height="12" rx="3" fill="#2b2723"/>
+        <!-- шви на плечах -->
+        <path d="M120 90 L128 132 M316 90 L308 132" stroke="#2b2723" stroke-width="2" fill="none"/>
+        <!-- пляма крові на грудях -->
+        <path d="M158 148 q-12 -20 6 -26 q6 -14 20 -8 q16 -6 20 10 q14 6 4 20 q4 16 -14 14 q-12 10 -22 -2 q-16 2 -14 -8 z" fill="#7a2320" opacity=".85"/>
+        <circle cx="196" cy="176" r="5" fill="#7a2320" opacity=".7"/>
+        <circle cx="172" cy="184" r="3.5" fill="#7a2320" opacity=".6"/>
+      </g>
+      <!-- маркер зони лейби: внутрішній бік коміра -->
+      <circle cx="218" cy="72" r="30" fill="none" stroke="#a8322a" stroke-width="2" stroke-dasharray="5 4"/>
+      <line x1="230" y1="99" x2="262" y2="286" stroke="#a8322a" stroke-width="2" stroke-dasharray="5 4"/>
       <!-- збільшена лейба -->
-      <g transform="rotate(-3 290 306)">
-        <rect x="150" y="240" width="264" height="132" rx="5" fill="#f8f5ee" stroke="#6f6650" stroke-width="2"/>
-        <line x1="150" y1="262" x2="414" y2="262" stroke="#c9b98a"/>
-        <text x="282" y="257" text-anchor="middle" font-family="Georgia" font-size="13" letter-spacing="3" fill="#4a4438">KRAVETS &amp; SYN</text>
-        <text x="162" y="285" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">вовна 100% · виріб 4-Б</text>
-        <text x="162" y="306" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">розмір 52-4 · партія N-53</text>
-        <text x="162" y="327" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">чистити делікатно · не прати</text>
-        <!-- значки догляду -->
+      <g transform="rotate(-2 290 348)">
+        <rect x="150" y="290" width="264" height="118" rx="5" fill="#f8f5ee" stroke="#6f6650" stroke-width="2"/>
+        <line x1="150" y1="312" x2="414" y2="312" stroke="#c9b98a"/>
+        <text x="282" y="307" text-anchor="middle" font-family="Georgia" font-size="13" letter-spacing="3" fill="#4a4438">KRAVETS &amp; SYN</text>
+        <text x="162" y="334" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">вовна 100%</text>
+        <text x="162" y="355" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">розмір 52-4 · партія N-53</text>
+        <text x="162" y="376" font-family="'Courier New',monospace" font-size="13" fill="#4a4438">чистити делікатно · не прати</text>
         <g stroke="#4a4438" fill="none" stroke-width="1.5">
-          <rect x="162" y="338" width="17" height="17"/>
-          <circle cx="199" cy="346" r="8"/>
-          <path d="M216 355 l8 -17 l8 17 z"/>
-          <path d="M240 340 h17 l-3 13 h-11 z"/>
+          <rect x="162" y="386" width="15" height="15"/>
+          <circle cx="196" cy="393" r="7"/>
+          <path d="M212 400 l7 -15 l7 15 z"/>
+          <path d="M234 386 h15 l-2.5 12 h-10 z"/>
         </g>
       </g>
       <!-- бирка речдоку -->
       <g transform="rotate(6 90 70)">
-        <rect x="46" y="52" width="80" height="38" fill="#f3e9b8" stroke="#a8322a" stroke-width="2"/>
-        <circle cx="56" cy="71" r="4" fill="none" stroke="#a8322a" stroke-width="2"/>
-        <text x="90" y="77" text-anchor="middle" font-family="'Courier New',monospace" font-size="20" font-weight="bold" fill="#a8322a">№ 2</text>
+        <rect x="46" y="40" width="80" height="38" fill="#f3e9b8" stroke="#a8322a" stroke-width="2"/>
+        <circle cx="56" cy="59" r="4" fill="none" stroke="#a8322a" stroke-width="2"/>
+        <text x="90" y="65" text-anchor="middle" font-family="'Courier New',monospace" font-size="20" font-weight="bold" fill="#a8322a">№ 2</text>
       </g>
     </svg>
   </div>
   <div class="caption">
     <b>РЕЧДОК № 2 · ПІДЖАК, СЛІДИ КРОВІ</b>
-    <span>ЛЕЙБА НА ПІДКЛАДЦІ · ФОТО 12.04, 22:44 · НЕ ТОРКАТИСЬ</span>
+    <span>НЕ ТОРКАТИСЬ</span>
   </div>
 </div>
 
-<!-- ═══ РЕЧДОК 3 · ЧАСТИНА ПІСТОЛЕТА З СЕРІЙНИКОМ (букви + 12 цифр) ═══ -->
+<!-- ═══ РЕЧДОК 3 · ПІСТОЛЕТ (серія SXTN 12) ═══ -->
 <div class="polaroid" id="p3">
-  <span class="case-stamp">СПРАВА № 003</span>
   <div class="photo">
     <svg viewBox="0 0 436 430" width="436" height="430">
       <rect width="436" height="430" fill="#efe7d4"/>
-      <ellipse cx="218" cy="368" rx="170" ry="18" fill="#e0d5ba"/>
-      <!-- кадр «частина зброї»: затвор + рамка, руків'я йде за край фото -->
-      <!-- затвор -->
-      <path d="M20 150 L390 150 L410 168 L410 208 L20 208 z" fill="#3d434d"/>
-      <path d="M20 150 L390 150 L410 168 L410 176 L20 176 z" fill="#4c545f"/>
-      <!-- насічки на затворі -->
-      <g stroke="#2b3038" stroke-width="4">
-        <line x1="330" y1="156" x2="330" y2="202"/>
-        <line x1="342" y1="156" x2="342" y2="202"/>
-        <line x1="354" y1="156" x2="354" y2="202"/>
-        <line x1="366" y1="156" x2="366" y2="202"/>
+      <ellipse cx="218" cy="372" rx="168" ry="16" fill="#e0d5ba"/>
+      <g>
+        <!-- цілик і мушка -->
+        <rect x="318" y="118" width="14" height="12" fill="#2f343b"/>
+        <rect x="56" y="120" width="8" height="10" fill="#2f343b"/>
+        <!-- затвор: дуло вліво, скошений ніс -->
+        <path d="M62 130 L332 130 Q346 130 346 144 V172 Q346 186 332 186 L54 186 Q44 186 44 176 V152 Q44 138 62 130 z" fill="#3a3f47"/>
+        <!-- верхня грань затвора -->
+        <path d="M62 130 L332 130 Q346 130 346 144 L44 144 Q46 134 62 130 z" fill="#4a505a"/>
+        <!-- дульний зріз -->
+        <rect x="44" y="150" width="8" height="26" rx="3" fill="#23272e"/>
+        <circle cx="52" cy="163" r="5" fill="#181b20"/>
+        <!-- вікно викидача -->
+        <rect x="252" y="136" width="46" height="16" rx="3" fill="#23272e"/>
+        <!-- насічки ззаду затвора -->
+        <g stroke="#2b3038" stroke-width="4">
+          <line x1="306" y1="136" x2="306" y2="180"/>
+          <line x1="316" y1="136" x2="316" y2="180"/>
+          <line x1="326" y1="136" x2="326" y2="180"/>
+          <line x1="336" y1="136" x2="336" y2="180"/>
+        </g>
+        <!-- рамка -->
+        <path d="M60 186 L344 186 L344 200 Q344 210 334 212 L296 214 L296 186 z" fill="#4c525c"/>
+        <path d="M60 186 L296 186 L296 214 L216 218 L206 240 L168 240 L158 214 L72 208 Q60 206 60 196 z" fill="#4c525c"/>
+        <!-- планка із серійником -->
+        <rect x="96" y="192" width="92" height="17" rx="2" fill="#6a7382" stroke="#2b3038"/>
+        <text x="142" y="205" text-anchor="middle" font-family="'Courier New',monospace" font-size="14" letter-spacing="2" fill="#1d2126">SXTN 12</text>
+        <!-- спускова скоба (отвір) і гачок -->
+        <path d="M158 214 L216 218 L206 240 L212 262 Q188 276 168 262 Q152 240 158 214 z" fill="#efe7d4"/>
+        <path d="M158 214 Q148 244 170 268 Q192 282 216 266 L206 240 L216 218 L296 214 L296 186 L60 186 L60 196 Q60 206 72 208 z" fill="none"/>
+        <path d="M156 212 Q146 246 170 270 Q194 284 218 268" stroke="#3a3f47" stroke-width="9" fill="none"/>
+        <path d="M186 224 q-8 14 2 26" stroke="#2b3038" stroke-width="6" fill="none"/>
+        <!-- руків'я з нахилом назад -->
+        <path d="M252 214 L342 210 Q352 210 354 220 L376 322 Q378 336 364 338 L292 348 Q280 350 278 338 L262 232 Q258 218 252 214 z" fill="#454a41"/>
+        <!-- накладка руків'я з насічкою -->
+        <path d="M276 232 L340 228 L360 320 L300 330 z" fill="#3a3f36"/>
+        <g fill="#2e332c">
+          <circle cx="298" cy="252" r="4"/><circle cx="318" cy="249" r="4"/><circle cx="338" cy="246" r="4"/>
+          <circle cx="303" cy="274" r="4"/><circle cx="323" cy="271" r="4"/><circle cx="343" cy="268" r="4"/>
+          <circle cx="308" cy="296" r="4"/><circle cx="328" cy="293" r="4"/><circle cx="348" cy="290" r="4"/>
+          <circle cx="313" cy="316" r="4"/><circle cx="333" cy="313" r="4"/>
+        </g>
+        <!-- п'ята магазину -->
+        <path d="M288 340 L368 330 L372 344 Q373 352 364 353 L296 360 Q288 360 288 352 z" fill="#23272e"/>
       </g>
-      <!-- вікно викидача -->
-      <rect x="238" y="158" width="64" height="18" rx="4" fill="#23272e"/>
-      <!-- цілик і мушка -->
-      <rect x="44" y="140" width="10" height="10" fill="#3d434d"/>
-      <rect x="380" y="140" width="8" height="10" fill="#3d434d"/>
-      <!-- рамка -->
-      <path d="M20 208 L410 208 L410 236 Q410 252 392 254 L332 258 L320 300 Q316 314 300 312 L252 306 L240 360 Q236 376 220 374 L150 366 Q136 364 138 348 L146 258 L20 244 z" fill="#565e6a"/>
-      <!-- спускова скоба і гачок -->
-      <path d="M252 258 Q238 300 268 306 L292 308 Q306 268 288 258 z" fill="#3d434d"/>
-      <path d="M270 262 q-10 16 2 30" stroke="#2b3038" stroke-width="6" fill="none"/>
-      <!-- руків'я з насічкою, обрізане краєм фото -->
-      <path d="M150 366 L138 430 L262 430 L240 360 Q236 376 220 374 z" fill="#4a4438"/>
-      <g fill="#3a352c">
-        <circle cx="175" cy="392" r="4"/><circle cx="197" cy="396" r="4"/><circle cx="219" cy="400" r="4"/>
-        <circle cx="166" cy="410" r="4"/><circle cx="188" cy="414" r="4"/><circle cx="210" cy="418" r="4"/>
-      </g>
-      <!-- планка із серійним номером: букви + 12 цифр -->
-      <rect x="52" y="216" width="252" height="24" rx="3" fill="#6a7382" stroke="#2b3038"/>
-      <text x="60" y="233" font-family="'Courier New',monospace" font-size="16" letter-spacing="2" fill="#1d2126">SX 4712 0388 9214</text>
-      <!-- стрілка уваги -->
-      <path d="M92 286 L120 248" stroke="#a8322a" stroke-width="3" fill="none"/>
-      <path d="M120 248 l-12 3 l7 10 z" fill="#a8322a"/>
       <!-- бирка речдоку -->
-      <g transform="rotate(-6 350 330)">
-        <rect x="308" y="312" width="80" height="38" fill="#f3e9b8" stroke="#a8322a" stroke-width="2"/>
-        <circle cx="318" cy="331" r="4" fill="none" stroke="#a8322a" stroke-width="2"/>
-        <text x="352" y="337" text-anchor="middle" font-family="'Courier New',monospace" font-size="20" font-weight="bold" fill="#a8322a">№ 3</text>
+      <g transform="rotate(-6 120 320)">
+        <rect x="76" y="300" width="80" height="38" fill="#f3e9b8" stroke="#a8322a" stroke-width="2"/>
+        <circle cx="86" cy="319" r="4" fill="none" stroke="#a8322a" stroke-width="2"/>
+        <text x="120" y="325" text-anchor="middle" font-family="'Courier New',monospace" font-size="20" font-weight="bold" fill="#a8322a">№ 3</text>
       </g>
-      <!-- маркер криміналіста (табличка-намет) -->
-      <path d="M36 84 L66 84 L58 112 L44 112 z" fill="#c9a437"/>
-      <text x="51" y="105" text-anchor="middle" font-family="'Courier New',monospace" font-size="14" font-weight="bold" fill="#2b2620">A</text>
+      <!-- стрілка на серійник -->
+      <line x1="118" y1="296" x2="128" y2="216" stroke="#a8322a" stroke-width="2" stroke-dasharray="5 4"/>
     </svg>
   </div>
   <div class="caption">
     <b>РЕЧДОК № 3 · ЗБРОЯ З МІСЦЯ ПОДІЇ</b>
-    <span>СЕРІЙНИЙ № НА РАМЦІ · ФОТО 12.04, 22:47 · НЕ ТОРКАТИСЬ</span>
+    <span>НЕ ТОРКАТИСЬ</span>
   </div>
 </div>
 
