@@ -162,16 +162,25 @@
   </div>
 </section>
 
-<!-- ЕКРАН: Телефон жертви (відкривається за QR; заблокований кодом) -->
+<!-- ЕКРАН: Телефон жертви — хмарне дзеркало СХОВИЩЕ-7.
+     До розсекречення досьє: мертвий чорний екран.
+     Після: хмарне дзеркало за кодом 1908. -->
 <section id="screen-phone" class="screen term-world" hidden>
   <div class="phone">
-    <div id="phoneLocked">
+    <div id="phoneDead" hidden>
+      <div class="ph-dead">
+        <p class="ph-dead-ico">▮</p>
+        <p class="ph-dead-line">ПРИСТРІЙ ЗАШИФРОВАНО</p>
+        <p class="ph-dead-sub">Екран не активується. Пам'ять недоступна.<br>Єдина копія даних — у сховищі власника.</p>
+      </div>
+    </div>
+    <div id="phoneLocked" hidden>
       <div class="phone-top">
-        <p class="ph-lock-ico">🔒</p>
-        <p class="ph-date">субота, 12 квітня</p>
+        <p class="ph-cloud">☁ SLUZHBA-X CLOUD · СХОВИЩЕ-7</p>
+        <p class="ph-date">дзеркало пристрою SLZH-117 · синхронізовано 12.04, 21:12</p>
       </div>
       <form id="phoneForm" class="ph-code">
-        <p class="ph-hint">Телефон заблоковано. Введіть код — 4 цифри</p>
+        <p class="ph-hint">Доступ за особистим кодом працівника — 4 цифри</p>
         <input id="phoneCode" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
         <button type="submit">OK</button>
         <p class="ph-err" id="phoneErr" hidden>Невірний код. Спроба зафіксована.</p>
@@ -179,7 +188,8 @@
     </div>
     <div id="phoneHome" hidden>
       <div class="phone-top">
-        <p class="ph-date">субота, 12 квітня</p>
+        <p class="ph-cloud">☁ СХОВИЩЕ-7 · дані відновлено</p>
+        <p class="ph-date">стан пристрою на 12 квітня, 21:12</p>
       </div>
       <div class="ph-notif">
         <p class="ph-app">☎ Виклики</p>

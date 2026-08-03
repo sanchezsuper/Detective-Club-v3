@@ -245,6 +245,13 @@ h2 { font-size: 1.2rem; }
 .ph-time { font-size: 2.6rem; margin: 0; font-weight: 200; }
 .ph-date { margin: 0; color: #9aa0ad; font-size: .85rem; }
 .ph-lock-ico { font-size: 2rem; margin: .5rem 0 .2rem; }
+.ph-cloud { font-family: var(--mono); font-size: .78rem; letter-spacing: .14em; color: #7ddb84; margin: 0 0 .3rem; }
+.ph-dead { text-align: center; padding: 4.5rem 0 5rem; }
+.ph-dead-ico { font-size: 2.2rem; color: #2a2d36; margin: 0 0 .8rem; animation: deadblink 2.4s steps(2) infinite; }
+@keyframes deadblink { 50% { opacity: .3; } }
+@media (prefers-reduced-motion: reduce) { .ph-dead-ico { animation: none; } }
+.ph-dead-line { font-family: var(--mono); letter-spacing: .22em; color: #767c88; margin: 0 0 .7rem; }
+.ph-dead-sub { color: #4a4f5a; font-size: .82rem; line-height: 1.7; margin: 0; }
 .ph-code { text-align: center; padding: 1rem 0 1.5rem; }
 .ph-hint { color: #9aa0ad; font-size: .85rem; margin: 0 0 .8rem; }
 .ph-code input {
