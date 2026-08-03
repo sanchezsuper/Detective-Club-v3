@@ -56,7 +56,7 @@
   <div class="sheet">
     <p class="case-no">Перевірка кандидата · допуск</p>
     <h2>Заявку прийнято. Пройдіть перевірку</h2>
-    <p class="task-text">Питання з архіву Клубу (відповідає кожен сам):</p>
+    <p class="task-text">Питання з архіву Клубу — відповідь індивідуальна:</p>
     <blockquote class="riddle">«Мене не видно, але я існую.<br>Мене можна знати, але не можна показати.<br>Варто мені вирватися назовні — і мене вже не існує.»</blockquote>
     <form id="taskForm">
       <label class="fld">
@@ -157,34 +157,48 @@
       </label>
       <button id="pinBtn" class="btn-stamp">Ввести</button>
       <p class="fail-msg" id="pinFail" hidden>ВІДМОВЛЕНО. Невірний PIN. Спробу зафіксовано.</p>
-      <p class="hint-dim">PIN складається з цифр, розкиданих по доказах на місці події.</p>
     </div>
     <div id="secretMount"></div>
   </div>
 </section>
 
-<!-- ЕКРАН: Телефон жертви (відкривається за QR) -->
+<!-- ЕКРАН: Телефон жертви (відкривається за QR; заблокований кодом) -->
 <section id="screen-phone" class="screen term-world" hidden>
   <div class="phone">
-    <div class="phone-top">
-      <p class="ph-time">21:03</p>
-      <p class="ph-date">субота, 12 квітня</p>
+    <div id="phoneLocked">
+      <div class="phone-top">
+        <p class="ph-lock-ico">🔒</p>
+        <p class="ph-date">субота, 12 квітня</p>
+      </div>
+      <form id="phoneForm" class="ph-code">
+        <p class="ph-hint">Телефон заблоковано. Введіть код — 4 цифри</p>
+        <input id="phoneCode" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
+        <button type="submit">OK</button>
+        <p class="ph-err" id="phoneErr" hidden>Невірний код. Спроба зафіксована.</p>
+      </form>
     </div>
-    <div class="ph-notif">
-      <p class="ph-app">☎ Виклики</p>
-      <p><b>Пропущений виклик</b> — Невідомий номер, <b>20:47</b></p>
+    <div id="phoneHome" hidden>
+      <div class="phone-top">
+        <p class="ph-date">субота, 12 квітня</p>
+      </div>
+      <div class="ph-notif">
+        <p class="ph-app">☎ Виклики</p>
+        <p><b>Пропущений виклик</b> — Невідомий номер, <b>20:47</b></p>
+      </div>
+      <div class="ph-notif">
+        <p class="ph-app">✉ Повідомлення</p>
+        <p class="bubble in">Вони близько.</p>
+        <p class="bubble in">Роби як домовились.</p>
+        <p class="bubble out draft">Чернетка: «Якщо щось піде не так — годинник підкаже прав…» <i>(не надіслано)</i></p>
+      </div>
+      <div class="ph-notif">
+        <p class="ph-app">🗒 Нотатки · «Периметр»</p>
+        <p class="mono-note">Т-1: [ЗАМІНИТИ: орієнтир локації] — 40 кроків</p>
+        <p class="mono-note">Т-2: [ЗАМІНИТИ: орієнтир] — 55 кроків</p>
+        <p class="mono-note">Т-3: [ЗАМІНИТИ: орієнтир] — 30 кроків</p>
+        <p class="mono-note">перетин — точка Х. далі по паперовій мапі</p>
+      </div>
     </div>
-    <div class="ph-notif">
-      <p class="ph-app">✉ Повідомлення</p>
-      <p class="bubble in">Вони близько.</p>
-      <p class="bubble in">Роби як домовились.</p>
-      <p class="bubble out draft">Чернетка: «Якщо щось піде не так — годинник підкаже прав…» <i>(не надіслано)</i></p>
-    </div>
-    <div class="ph-notif">
-      <p class="ph-app">🗒 Нотатки</p>
-      <p class="mono-note">49.8░░░░, 24.0░░░░ — далі стерто</p>
-    </div>
-    <p class="hint-dim center">Телефон заблоковано. Більше нічого відкрити не вдається.</p>
   </div>
 </section>
 

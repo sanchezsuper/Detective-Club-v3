@@ -14,6 +14,7 @@ const HASHES = {
   login: ['bf0d358aeed8f1720d028b9b9533530b33eac1ac25a93c37c1b3a8fa4c6d5921', 'e58c835dddd245b7b3e5aad030fb65528ee1473994623f1de4dfc67fb123bac4', '9d117f3cd34688120987aae10d416ba208aa5fa22aefee92556198b1ac57518a'],
   password: ['8eec27653c19ed078b2f3bae16ff901d16347d7917d2b8e2317914e2437bf324'],
   finalCode: ['6dd6d77794056ba92bc53c43a5dd1b0149d7e88e4273e880d693baec4ff45860', 'bb6bdb0c73ceb13ee7074dcdd2af0d3c652b3a657bc8d343fbf336064c8f29ba', '26eb51352cab37e6c6ca1c476a4ea172d20814d6a1a89097dbfaace21695abdf'],
+  phoneCode: ['00f6112fe58387958ef80793a34746429f40c97fe7b51d6a576705acbf8fc6af'],
   hostKey: ['01d85a117ed108b491612374331112b338b6be3a978261f0a01fd9de57cbb6be'],
 };
 
@@ -29,15 +30,15 @@ async function matches(value, group) {
 const AVATARS = [
   '🕵️', '🦊', '🦉', '🐺', '🦅', '🐈', '🗝️', '♠️',
   '👽', '🐐', '😈', '👹', '💀', '👻', '🐢', '🦖',
-  '🐙', '🦇', '🐸', '🧙', '🥷', '🤖', '🎃', '🦄',
+  '🐙', '🦇', '🐸', '🧙', '🧛', '🤖', '🎃', '🦄',
 ];
 
 /* Розсекречена частина досьє зашифрована AES-GCM ключем із PIN:
    без правильного PIN тексту фізично немає на сторінці. */
 const SECRET = {
-  salt: 'pRXrf7KPgTd/Ytbsb5T2ng==',
-  iv: 'cYSIcScTf1noAYrH',
-  data: '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',
+  salt: 'h+PTj1Ef0J/jFHdGDEK7BA==',
+  iv: 'p7wi9dsH98ao1sJD',
+  data: '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',
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -79,6 +80,7 @@ function route() {
   if (name === 'cabinet') renderCabinet();
   if (name === 'terminal') bootTerminal();
   if (name === 'dossier') renderDossier();
+  if (name === 'phone') renderPhone();
 }
 window.addEventListener('hashchange', route);
 
@@ -271,6 +273,24 @@ function renderDossier() {
 $('#pinBtn').addEventListener('click', () => {
   $('#pinFail').hidden = true;
   tryDeclassify($('#pinInput').value.trim());
+});
+
+/* ---------- Телефон жертви ---------- */
+function renderPhone() {
+  const unlocked = !!load().phoneUnlocked;
+  $('#phoneLocked').hidden = unlocked;
+  $('#phoneHome').hidden = !unlocked;
+}
+
+$('#phoneForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
+  $('#phoneErr').hidden = true;
+  if (await matches($('#phoneCode').value, 'phoneCode')) {
+    save({ phoneUnlocked: true });
+    renderPhone();
+  } else {
+    $('#phoneErr').hidden = false;
+  }
 });
 
 /* ---------- Фінал ---------- */
