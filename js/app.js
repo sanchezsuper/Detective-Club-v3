@@ -4,8 +4,6 @@
 
 'use strict';
 
-const GAME_HOURS = 3;
-
 /* Відповіді зберігаються як SHA-256-хеші — у відкритому коді сайту
    їх не підглянути (важливо для публічного хостингу, напр. GitHub Pages).
    Згенерувати новий хеш: node -e "console.log(require('crypto').createHash('sha256').update('відповідь').digest('hex'))" */
@@ -36,9 +34,9 @@ const AVATARS = [
 /* Розсекречена частина досьє зашифрована AES-GCM ключем із PIN:
    без правильного PIN тексту фізично немає на сторінці. */
 const SECRET = {
-  salt: 'h+PTj1Ef0J/jFHdGDEK7BA==',
-  iv: 'p7wi9dsH98ao1sJD',
-  data: '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',
+  salt: 'dOGc5Y3nA32o9G3GOCEvpQ==',
+  iv: 'u8LBcNi9C+5r+B2e',
+  data: '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',
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -155,19 +153,12 @@ function updateClock() {
   $('#secretLock').hidden = !started;
   if (!started) return;
 
-  const end = s.startedAt + GAME_HOURS * 3600 * 1000;
-  let left = end - Date.now();
-  const overtime = left < 0;
-  if (overtime) left = -left;
-  const hh = String(Math.floor(left / 3600000)).padStart(2, '0');
-  const mm = String(Math.floor((left % 3600000) / 60000)).padStart(2, '0');
-  const ss = String(Math.floor((left % 60000) / 1000)).padStart(2, '0');
-  const clock = $('#clock');
-  clock.textContent = (overtime ? '+' : '') + `${hh}:${mm}:${ss}`;
-  clock.classList.toggle('overtime', overtime);
-  $('#clockNote').textContent = overtime
-    ? 'Час вийшов. Операція триває, але рейтинг агентства падає.'
-    : 'До кінця операції. Після нуля гра триває — падає рейтинг агентства.';
+  // Хронометр без дедлайну: просто фіксує тривалість операції
+  const elapsed = Date.now() - s.startedAt;
+  const hh = String(Math.floor(elapsed / 3600000)).padStart(2, '0');
+  const mm = String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0');
+  const ss = String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0');
+  $('#clock').textContent = `${hh}:${mm}:${ss}`;
 }
 
 $('#secretLock').addEventListener('click', () => { location.hash = '#/terminal'; });
@@ -300,9 +291,6 @@ $('#finForm').addEventListener('submit', async (e) => {
     save({ solvedAt: Date.now() });
     $('#solvedForm').hidden = true;
     $('#solvedDone').hidden = false;
-    const s = load();
-    const overtime = s.startedAt && (s.solvedAt - s.startedAt) > GAME_HOURS * 3600 * 1000;
-    $('#ratingLine').textContent = overtime ? '★★★★☆ (понаднормово)' : '★★★★★';
     // Твіст 2: бігучий рядок «випадково» виповзає за кілька секунд
     setTimeout(() => { $('#newsTicker').hidden = false; }, 4000);
   } else {
