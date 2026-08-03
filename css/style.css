@@ -221,7 +221,7 @@ h2 { font-size: 1.2rem; }
 }
 .pin-panel label { display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; font-size: .8rem; letter-spacing: .12em; }
 .pin-panel input {
-  width: 13ch; font-family: var(--mono); font-size: 1.3rem; letter-spacing: .35em;
+  width: 16ch; font-family: var(--mono); font-size: 1.3rem; letter-spacing: .35em;
   text-indent: .35em; /* компенсує letter-spacing останнього знака — 6 цифр стоять по центру */
   text-align: center; border: 1px solid var(--line); background: var(--bg); padding: .3rem .2rem;
 }
