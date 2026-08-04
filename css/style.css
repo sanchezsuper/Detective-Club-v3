@@ -267,19 +267,27 @@ h2 { font-size: 1.2rem; }
 @media (prefers-reduced-motion: reduce) { .ph-dead-ico { animation: none; } }
 .ph-dead-line { font-family: var(--mono); letter-spacing: .22em; color: #767c88; margin: 0 0 .7rem; }
 .ph-dead-sub { color: #4a4f5a; font-size: .82rem; line-height: 1.7; margin: 0; }
-.ph-code { text-align: center; padding: 1rem 0 1.5rem; }
-.ph-hint { color: #9aa0ad; font-size: .85rem; margin: 0 0 .8rem; }
-.ph-code input {
-  width: min(100%, 230px); font-size: 2rem; letter-spacing: .65em; text-indent: .65em; text-align: center;
-  background: rgba(255, 255, 255, .08); border: 1px solid #3a3e48; border-radius: .8rem;
-  color: #e8eaf0; padding: .5rem .2rem; font-variant-numeric: tabular-nums;
+.ph-code { text-align: center; padding: .6rem 0 1rem; }
+.ph-dots { display: flex; gap: 1.1rem; justify-content: center; margin: 1rem 0 1.6rem; }
+.ph-dots i {
+  width: 13px; height: 13px; border-radius: 50%;
+  border: 1.5px solid #4a4f5a; transition: background .15s, border-color .15s;
 }
-.ph-code button {
-  display: block; margin: .9rem auto 0; background: #2a2d36; color: #e8eaf0;
-  border: none; border-radius: 2rem; padding: .5rem 1.6rem; font-size: .9rem; cursor: pointer;
+.ph-dots i.on { background: #e8eaf0; border-color: #e8eaf0; }
+.ph-pad {
+  display: grid; grid-template-columns: repeat(3, 66px);
+  gap: .8rem 1.5rem; justify-content: center;
 }
-.ph-code button:hover { background: #3a3e48; }
-.ph-err { color: #e05545; font-size: .8rem; margin: .7rem 0 0; }
+.ph-pad button {
+  width: 66px; height: 66px; border-radius: 50%; border: none; cursor: pointer;
+  background: rgba(255, 255, 255, .07); color: #e8eaf0;
+  font-size: 1.55rem; font-family: inherit;
+  transition: background .12s;
+}
+.ph-pad button:hover { background: rgba(255, 255, 255, .13); }
+.ph-pad button:active { background: rgba(255, 255, 255, .22); }
+.ph-pad .ph-del { background: transparent; font-size: 1.25rem; }
+.ph-err { color: #e05545; font-size: .8rem; margin: .9rem 0 0; }
 .ph-notif {
   background: rgba(255, 255, 255, .08); border-radius: .8rem;
   padding: .7rem .9rem; margin-bottom: .7rem; font-size: .88rem;

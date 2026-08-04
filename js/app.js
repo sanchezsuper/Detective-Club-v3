@@ -34,9 +34,9 @@ const AVATARS = [
 /* Розсекречена частина досьє зашифрована AES-GCM ключем із PIN:
    без правильного PIN тексту фізично немає на сторінці. */
 const SECRET = {
-  salt: 'OtesDxMdFG19jpy+vNpIgA==',
-  iv: '1Mf5mSEFhqlj3bpY',
-  data: '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',
+  salt: 'OFLl2Qik/YVCiewWcSeM9g==',
+  iv: 'QRyAvYX7DEDSpLIk',
+  data: '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',
 };
 
 const $ = (sel) => document.querySelector(sel);
@@ -278,14 +278,35 @@ function renderPhone() {
   $('#phoneHome').hidden = dead || !unlocked;
 }
 
-$('#phoneForm').addEventListener('submit', async (e) => {
-  e.preventDefault();
+/* Екранна клавіатура — щоб на мобільному не вилазила системна */
+let phoneEntry = '';
+function updPhoneDots() {
+  [...$('#phoneDots').children].forEach((d, i) => d.classList.toggle('on', i < phoneEntry.length));
+}
+$('#phonePadKeys').addEventListener('click', async (e) => {
+  const b = e.target.closest('button');
+  if (!b) return;
   $('#phoneErr').hidden = true;
-  if (await matches($('#phoneCode').value, 'phoneCode')) {
-    save({ phoneUnlocked: true });
-    renderPhone();
-  } else {
-    $('#phoneErr').hidden = false;
+  const k = b.dataset.k;
+  if (k === 'del') {
+    phoneEntry = phoneEntry.slice(0, -1);
+    updPhoneDots();
+    return;
+  }
+  if (phoneEntry.length >= 4) return;
+  phoneEntry += k;
+  updPhoneDots();
+  if (phoneEntry.length === 4) {
+    const ok = await matches(phoneEntry, 'phoneCode');
+    phoneEntry = '';
+    if (ok) {
+      save({ phoneUnlocked: true });
+      updPhoneDots();
+      renderPhone();
+    } else {
+      $('#phoneErr').hidden = false;
+      setTimeout(updPhoneDots, 350);
+    }
   }
 });
 

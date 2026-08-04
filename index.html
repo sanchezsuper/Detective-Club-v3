@@ -180,13 +180,25 @@
         <p class="ph-date">дзеркало пристрою SLZH-117</p>
         <p class="ph-date">синхронізовано 12.04, 21:12</p>
       </div>
-      <form id="phoneForm" class="ph-code">
+      <div class="ph-code">
         <p class="ph-pin-title">PIN CODE</p>
-        <p class="ph-hint">особистий код працівника — 4 цифри</p>
-        <input id="phoneCode" inputmode="numeric" maxlength="4" autocomplete="off" placeholder="••••">
-        <button type="submit">OK</button>
+        <div class="ph-dots" id="phoneDots"><i></i><i></i><i></i><i></i></div>
+        <div class="ph-pad" id="phonePadKeys">
+          <button type="button" data-k="1">1</button>
+          <button type="button" data-k="2">2</button>
+          <button type="button" data-k="3">3</button>
+          <button type="button" data-k="4">4</button>
+          <button type="button" data-k="5">5</button>
+          <button type="button" data-k="6">6</button>
+          <button type="button" data-k="7">7</button>
+          <button type="button" data-k="8">8</button>
+          <button type="button" data-k="9">9</button>
+          <span></span>
+          <button type="button" data-k="0">0</button>
+          <button type="button" data-k="del" class="ph-del" aria-label="Стерти">⌫</button>
+        </div>
         <p class="ph-err" id="phoneErr" hidden>Невірний код. Спроба зафіксована.</p>
-      </form>
+      </div>
     </div>
     <div id="phoneHome" class="ph-state ph-top-align" hidden>
       <div class="phone-top">
