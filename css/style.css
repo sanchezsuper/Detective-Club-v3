@@ -299,6 +299,7 @@ h2 { font-size: 1.2rem; }
 .bubble.out { background: #1e3a5c; margin-left: auto; }
 .bubble.draft { opacity: .75; font-style: italic; }
 .mono-note { font-family: var(--mono); color: #cfd3dd; }
+.ph-empty { color: #767c88; font-style: italic; }
 .phone .hint-dim { color: #767c88; }
 
 /* Доступ заборонено */
