@@ -195,15 +195,26 @@ function drawScales() {
   ctx.strokeStyle = '#2b2620'; ctx.lineWidth = 3;
   ctx.strokeRect(MX, y, barLen, 34);
 
-  // риски та підписи кожні 500 м
+  // риски та підписи кожні 500 м; «м» — впритул до кінця шкали, щоб не різалась рамкою
   ctx.fillStyle = '#2b2620';
   ctx.font = '34px "Courier New", monospace';
   for (let m = 0; m <= maxMeters; m += 500) {
     const x = MX + m / 100 * px100;
     ctx.beginPath(); ctx.moveTo(x, y - 14); ctx.lineTo(x, y + 34); ctx.stroke();
-    ctx.fillText(String(m), x - (m ? 34 : 8), y + 76);
+    const isLastTick = m + 500 > maxMeters;
+    if (isLastTick && maxMeters % 500 === 0) {
+      ctx.textAlign = 'right';
+      ctx.fillText(m + ' м', x + 10, y + 76);
+      ctx.textAlign = 'left';
+    } else {
+      ctx.fillText(String(m), x - (m ? 34 : 8), y + 76);
+    }
   }
-  ctx.fillText('м', MX + barLen + 26, y + 76);
+  if (maxMeters % 500 !== 0) {
+    ctx.textAlign = 'right';
+    ctx.fillText('м', MX + barLen, y + 76);
+    ctx.textAlign = 'left';
+  }
 
 }
 
