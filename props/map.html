@@ -65,7 +65,7 @@
   <b>1.</b> Зробіть великий скріншот з <b>openstreetmap.org</b> (всі 3 точки + запас ~1,5 км) і закиньте сюди.
   <b>2.</b> Натисніть <b>«Калібрувати»</b> і клікніть дві точки на мапі, відстань між якими знаєте в метрах
   (виміряти: Google Maps → ПКМ → «Виміряти відстань»; або клікніть кінці масштабного відрізка OSM і введіть його значення).
-  <b>3.</b> Введіть метри, натисніть «Застосувати» — знизу з'явиться шкала, праворуч — відривна лінійка.
+  <b>3.</b> Введіть метри, натисніть «Застосувати» — внизу з'явиться точна шкала.
   <b>4.</b> «Зберегти PNG» або «Роздрукувати». <i>Лінійка надрукована разом з мапою, тому масштаб вірний навіть якщо принтер стисне сторінку.</i>
 </div>
 
@@ -89,11 +89,10 @@
 
 /* А4 альбомна @300 DPI */
 const W = 3508, H = 2480, PXCM = 118.11;
-const MX = 120, MY = 250;                 // поле і верх мапи
-const RULW = 240;                          // ширина відривної лінійки праворуч
-const BARH = 300;                          // висота зони шкали внизу
-const MAPW = W - MX - RULW - MX - 40;      // область мапи
-const MAPH = H - MY - BARH - 60;
+const MX = 100, MY = 185;                 // поле і верх мапи (одразу під тайтлом)
+const BARY = H - 165;                      // верх смуги шкали — впритул до низу
+const MAPW = W - MX * 2;                   // мапа на всю ширину
+const MAPH = BARY - 30 - MY;               // мапа до самої шкали
 
 const cv = document.getElementById('page');
 const ctx = cv.getContext('2d');
@@ -133,14 +132,14 @@ function render() {
   // шапка
   ctx.fillStyle = '#2b2620';
   ctx.font = 'bold 64px "Courier New", monospace';
-  ctx.fillText('МАПА РАЙОНУ · СПРАВА № 003', MX, 165);
+  ctx.fillText('МАПА РАЙОНУ · СПРАВА № 003', MX, 150);
   ctx.font = '44px "Courier New", monospace';
   ctx.fillStyle = '#6f6650';
   if (state.mpp) {
     const n = Math.round(state.mpp * PXCM * 100 / 50) * 50; // 1:N, округлення до 50
-    ctx.fillText('МАСШТАБ 1:' + n, W - MX - 720, 165);
+    ctx.fillText('МАСШТАБ 1:' + n + ' · поділка шкали 100 м', W - MX - 1560, 150);
   } else {
-    ctx.fillText('МАСШТАБ: не калібровано', W - MX - 900, 165);
+    ctx.fillText('МАСШТАБ: не калібровано', W - MX - 900, 150);
   }
 
   // область мапи
@@ -184,57 +183,28 @@ function render() {
 
 function drawScales() {
   const px100 = 100 / state.mpp;               // пікселів аркуша на 100 м
-  // ── нижня шкала ──
-  const y = H - 200;
-  const maxMeters = Math.min(2000, Math.floor((MAPW) / px100) * 100);
-  ctx.fillStyle = '#2b2620';
-  ctx.font = 'bold 40px "Courier New", monospace';
-  ctx.fillText('ШКАЛА · поділка = 100 м', MX, y - 62);
+  const y = BARY;
+  const maxMeters = Math.max(100, Math.min(2000, Math.floor(MAPW / px100) * 100));
+  const barLen = maxMeters / 100 * px100;
+
+  // смуга чорно-білих сегментів по 100 м
   for (let m = 0; m < maxMeters; m += 100) {
     ctx.fillStyle = (m / 100) % 2 === 0 ? '#2b2620' : '#f8f5ee';
     ctx.fillRect(MX + m / 100 * px100, y, px100, 34);
   }
   ctx.strokeStyle = '#2b2620'; ctx.lineWidth = 3;
-  ctx.strokeRect(MX, y, maxMeters / 100 * px100, 34);
+  ctx.strokeRect(MX, y, barLen, 34);
+
+  // риски та підписи кожні 500 м
   ctx.fillStyle = '#2b2620';
   ctx.font = '34px "Courier New", monospace';
   for (let m = 0; m <= maxMeters; m += 500) {
     const x = MX + m / 100 * px100;
     ctx.beginPath(); ctx.moveTo(x, y - 14); ctx.lineTo(x, y + 34); ctx.stroke();
-    ctx.fillText(String(m), x - (m ? 34 : 8), y + 82);
+    ctx.fillText(String(m), x - (m ? 34 : 8), y + 76);
   }
-  ctx.fillText('м', MX + maxMeters / 100 * px100 + 26, y + 82);
+  ctx.fillText('м', MX + barLen + 26, y + 76);
 
-  // ── відривна лінійка праворуч ──
-  const rx = W - RULW - 70;
-  ctx.setLineDash([18, 14]);
-  ctx.strokeStyle = '#6f6650'; ctx.lineWidth = 3;
-  ctx.beginPath(); ctx.moveTo(rx - 30, 80); ctx.lineTo(rx - 30, H - 80); ctx.stroke();
-  ctx.setLineDash([]);
-  ctx.save();
-  ctx.translate(rx - 44, H / 2);
-  ctx.rotate(-Math.PI / 2);
-  ctx.fillStyle = '#6f6650';
-  ctx.font = '30px "Courier New", monospace';
-  ctx.textAlign = 'center';
-  ctx.fillText('✂ ВІДРІЖ — ЛІНІЙКА СПРАВИ № 003', 0, 0);
-  ctx.restore();
-  ctx.textAlign = 'left';
-  const rTop = 140;
-  const rMax = Math.min(2000, Math.floor((H - rTop - 140) / px100) * 100);
-  for (let m = 0; m < rMax; m += 100) {
-    ctx.fillStyle = (m / 100) % 2 === 0 ? '#2b2620' : '#f8f5ee';
-    ctx.fillRect(rx, rTop + m / 100 * px100, 34, px100);
-  }
-  ctx.strokeStyle = '#2b2620'; ctx.lineWidth = 3;
-  ctx.strokeRect(rx, rTop, 34, rMax / 100 * px100);
-  ctx.fillStyle = '#2b2620';
-  ctx.font = '30px "Courier New", monospace';
-  for (let m = 0; m <= rMax; m += 500) {
-    const yy = rTop + m / 100 * px100;
-    ctx.beginPath(); ctx.moveTo(rx, yy); ctx.lineTo(rx + 52, yy); ctx.stroke();
-    ctx.fillText(String(m), rx + 62, yy + 10);
-  }
 }
 
 /* ---------- завантаження ---------- */
