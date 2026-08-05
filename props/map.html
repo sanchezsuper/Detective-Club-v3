@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Мапа справи — інструмент ведучого</title>
+<style>
+  :root {
+    --bg: #e7dfcd; --surface: #f8f5ee; --ink: #2b2620; --muted: #6f6650;
+    --line: #cfc4a8; --stamp: #a8322a;
+  }
+  * { box-sizing: border-box; }
+  body {
+    background: var(--bg); color: var(--ink); margin: 0; padding: 2rem 1rem 4rem;
+    font-family: 'Courier New', Courier, monospace;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+  }
+  h1 { font-size: 1.15rem; text-transform: uppercase; letter-spacing: .1em; margin: 0; text-align: center; }
+  .steps {
+    max-width: 52rem; background: var(--surface); border: 1px solid var(--line);
+    padding: 1rem 1.3rem; font-family: Georgia, serif; font-size: .92rem; line-height: 1.6;
+  }
+  .steps b { font-family: 'Courier New', monospace; }
+  .bar {
+    display: flex; flex-wrap: wrap; gap: .6rem; align-items: center; justify-content: center;
+    max-width: 60rem;
+  }
+  .bar button, .bar label.filebtn {
+    background: var(--stamp); color: var(--surface); border: none; cursor: pointer;
+    font-family: 'Courier New', monospace; text-transform: uppercase;
+    letter-spacing: .12em; font-size: .72rem; padding: .6rem 1rem;
+  }
+  .bar button:disabled { background: var(--line); cursor: default; }
+  .bar button.active { background: #8a6d1f; }
+  .bar input[type="file"] { display: none; }
+  .bar input[type="number"] {
+    width: 7.5rem; font-family: 'Courier New', monospace; font-size: .9rem;
+    border: 1px solid var(--line); background: var(--surface); padding: .5rem .6rem;
+  }
+  .bar label.chk { font-size: .75rem; letter-spacing: .06em; display: flex; gap: .35rem; align-items: center; }
+  #status {
+    font-size: .78rem; letter-spacing: .06em; color: var(--muted);
+    background: var(--surface); border: 1px dashed var(--line); padding: .5rem .9rem;
+    max-width: 60rem; text-align: center;
+  }
+  #status.ok { color: #4a7a3a; border-style: solid; }
+  #status.warn { color: var(--stamp); }
+  canvas#page {
+    width: min(1040px, 96vw); height: auto;
+    box-shadow: 0 8px 22px rgba(40, 30, 10, .35); background: #fff;
+    cursor: crosshair;
+  }
+  .print-only { display: none; }
+  @media print {
+    body > * { display: none !important; }
+    .print-only { display: block !important; width: 100%; }
+  }
+</style>
+</head>
+<body>
+
+<h1>Мапа справи № 003 · точний масштаб + лінійка</h1>
+
+<div class="steps">
+  <b>1.</b> Зробіть великий скріншот з <b>openstreetmap.org</b> (всі 3 точки + запас ~1,5 км) і закиньте сюди.
+  <b>2.</b> Натисніть <b>«Калібрувати»</b> і клікніть дві точки на мапі, відстань між якими знаєте в метрах
+  (виміряти: Google Maps → ПКМ → «Виміряти відстань»; або клікніть кінці масштабного відрізка OSM і введіть його значення).
+  <b>3.</b> Введіть метри, натисніть «Застосувати» — знизу з'явиться шкала, праворуч — відривна лінійка.
+  <b>4.</b> «Зберегти PNG» або «Роздрукувати». <i>Лінійка надрукована разом з мапою, тому масштаб вірний навіть якщо принтер стисне сторінку.</i>
+</div>
+
+<div class="bar">
+  <label class="filebtn">Завантажити мапу<input type="file" id="file" accept="image/*"></label>
+  <button id="calibBtn" disabled>Калібрувати (2 кліки)</button>
+  <input type="number" id="meters" min="1" placeholder="метрів" disabled>
+  <button id="applyBtn" disabled>Застосувати</button>
+  <label class="chk"><input type="checkbox" id="sepia"> старий папір</label>
+  <button id="saveBtn" disabled>Зберегти PNG</button>
+  <button id="printBtn" disabled>Роздрукувати</button>
+</div>
+
+<p id="status">Закиньте скріншот мапи (можна перетягнути прямо на аркуш нижче).</p>
+
+<canvas id="page" width="3508" height="2480"></canvas>
+<img class="print-only" id="printImg" alt="Мапа для друку">
+
+<script>
+'use strict';
+
+/* А4 альбомна @300 DPI */
+const W = 3508, H = 2480, PXCM = 118.11;
+const MX = 120, MY = 250;                 // поле і верх мапи
+const RULW = 240;                          // ширина відривної лінійки праворуч
+const BARH = 300;                          // висота зони шкали внизу
+const MAPW = W - MX - RULW - MX - 40;      // область мапи
+const MAPH = H - MY - BARH - 60;
+
+const cv = document.getElementById('page');
+const ctx = cv.getContext('2d');
+const $ = (id) => document.getElementById(id);
+
+const state = {
+  img: null,
+  draw: null,        // {x, y, w, h, s} — як мапа вписана в аркуш
+  calibMode: false,
+  clicks: [],        // точки калібрування в координатах аркуша
+  mpp: null,         // метрів на піксель АРКУША (не оригіналу)
+};
+window.__mapState = state; // для автотестів
+
+function setStatus(msg, cls) {
+  const el = $('status');
+  el.textContent = msg;
+  el.className = cls || '';
+}
+
+function fitContain(iw, ih, bw, bh) {
+  const s = Math.min(bw / iw, bh / ih);
+  return { w: iw * s, h: ih * s, s };
+}
+
+function render() {
+  ctx.setTransform(1, 0, 0, 1, 0, 0);
+  ctx.fillStyle = '#f8f5ee';
+  ctx.fillRect(0, 0, W, H);
+
+  // рамка досьє
+  ctx.strokeStyle = '#8a6d1f'; ctx.lineWidth = 6;
+  ctx.strokeRect(40, 40, W - 80, H - 80);
+  ctx.lineWidth = 2;
+  ctx.strokeRect(56, 56, W - 112, H - 112);
+
+  // шапка
+  ctx.fillStyle = '#2b2620';
+  ctx.font = 'bold 64px "Courier New", monospace';
+  ctx.fillText('МАПА РАЙОНУ · СПРАВА № 003', MX, 165);
+  ctx.font = '44px "Courier New", monospace';
+  ctx.fillStyle = '#6f6650';
+  if (state.mpp) {
+    const n = Math.round(state.mpp * PXCM * 100 / 50) * 50; // 1:N, округлення до 50
+    ctx.fillText('МАСШТАБ 1:' + n, W - MX - 720, 165);
+  } else {
+    ctx.fillText('МАСШТАБ: не калібровано', W - MX - 900, 165);
+  }
+
+  // область мапи
+  ctx.strokeStyle = '#cfc4a8'; ctx.lineWidth = 3;
+  ctx.strokeRect(MX, MY, MAPW, MAPH);
+  if (state.img) {
+    const f = fitContain(state.img.width, state.img.height, MAPW, MAPH);
+    const dx = MX + (MAPW - f.w) / 2, dy = MY + (MAPH - f.h) / 2;
+    state.draw = { x: dx, y: dy, w: f.w, h: f.h, s: f.s };
+    ctx.save();
+    if ($('sepia').checked) ctx.filter = 'sepia(0.45) saturate(0.85) contrast(0.98)';
+    ctx.drawImage(state.img, dx, dy, f.w, f.h);
+    ctx.restore();
+  } else {
+    ctx.fillStyle = '#b9ab8d';
+    ctx.font = '52px "Courier New", monospace';
+    ctx.textAlign = 'center';
+    ctx.fillText('тут буде ваша мапа', MX + MAPW / 2, MY + MAPH / 2);
+    ctx.textAlign = 'left';
+  }
+
+  // точки калібрування
+  if (state.clicks.length) {
+    ctx.strokeStyle = '#a8322a'; ctx.fillStyle = '#a8322a'; ctx.lineWidth = 5;
+    state.clicks.forEach((p) => {
+      ctx.beginPath(); ctx.arc(p.x, p.y, 16, 0, Math.PI * 2); ctx.stroke();
+      ctx.beginPath(); ctx.arc(p.x, p.y, 4, 0, Math.PI * 2); ctx.fill();
+    });
+    if (state.clicks.length === 2) {
+      ctx.setLineDash([14, 10]);
+      ctx.beginPath();
+      ctx.moveTo(state.clicks[0].x, state.clicks[0].y);
+      ctx.lineTo(state.clicks[1].x, state.clicks[1].y);
+      ctx.stroke();
+      ctx.setLineDash([]);
+    }
+  }
+
+  if (state.mpp) drawScales();
+}
+
+function drawScales() {
+  const px100 = 100 / state.mpp;               // пікселів аркуша на 100 м
+  // ── нижня шкала ──
+  const y = H - 200;
+  const maxMeters = Math.min(2000, Math.floor((MAPW) / px100) * 100);
+  ctx.fillStyle = '#2b2620';
+  ctx.font = 'bold 40px "Courier New", monospace';
+  ctx.fillText('ШКАЛА · поділка = 100 м', MX, y - 62);
+  for (let m = 0; m < maxMeters; m += 100) {
+    ctx.fillStyle = (m / 100) % 2 === 0 ? '#2b2620' : '#f8f5ee';
+    ctx.fillRect(MX + m / 100 * px100, y, px100, 34);
+  }
+  ctx.strokeStyle = '#2b2620'; ctx.lineWidth = 3;
+  ctx.strokeRect(MX, y, maxMeters / 100 * px100, 34);
+  ctx.fillStyle = '#2b2620';
+  ctx.font = '34px "Courier New", monospace';
+  for (let m = 0; m <= maxMeters; m += 500) {
+    const x = MX + m / 100 * px100;
+    ctx.beginPath(); ctx.moveTo(x, y - 14); ctx.lineTo(x, y + 34); ctx.stroke();
+    ctx.fillText(String(m), x - (m ? 34 : 8), y + 82);
+  }
+  ctx.fillText('м', MX + maxMeters / 100 * px100 + 26, y + 82);
+
+  // ── відривна лінійка праворуч ──
+  const rx = W - RULW - 70;
+  ctx.setLineDash([18, 14]);
+  ctx.strokeStyle = '#6f6650'; ctx.lineWidth = 3;
+  ctx.beginPath(); ctx.moveTo(rx - 30, 80); ctx.lineTo(rx - 30, H - 80); ctx.stroke();
+  ctx.setLineDash([]);
+  ctx.save();
+  ctx.translate(rx - 44, H / 2);
+  ctx.rotate(-Math.PI / 2);
+  ctx.fillStyle = '#6f6650';
+  ctx.font = '30px "Courier New", monospace';
+  ctx.textAlign = 'center';
+  ctx.fillText('✂ ВІДРІЖ — ЛІНІЙКА СПРАВИ № 003', 0, 0);
+  ctx.restore();
+  ctx.textAlign = 'left';
+  const rTop = 140;
+  const rMax = Math.min(2000, Math.floor((H - rTop - 140) / px100) * 100);
+  for (let m = 0; m < rMax; m += 100) {
+    ctx.fillStyle = (m / 100) % 2 === 0 ? '#2b2620' : '#f8f5ee';
+    ctx.fillRect(rx, rTop + m / 100 * px100, 34, px100);
+  }
+  ctx.strokeStyle = '#2b2620'; ctx.lineWidth = 3;
+  ctx.strokeRect(rx, rTop, 34, rMax / 100 * px100);
+  ctx.fillStyle = '#2b2620';
+  ctx.font = '30px "Courier New", monospace';
+  for (let m = 0; m <= rMax; m += 500) {
+    const yy = rTop + m / 100 * px100;
+    ctx.beginPath(); ctx.moveTo(rx, yy); ctx.lineTo(rx + 52, yy); ctx.stroke();
+    ctx.fillText(String(m), rx + 62, yy + 10);
+  }
+}
+
+/* ---------- завантаження ---------- */
+function setFile(file) {
+  if (!file || !file.type.startsWith('image/')) return;
+  const url = URL.createObjectURL(file);
+  const im = new Image();
+  im.onload = () => {
+    state.img = im;
+    state.clicks = [];
+    state.mpp = null;
+    $('calibBtn').disabled = false;
+    $('saveBtn').disabled = false;
+    $('printBtn').disabled = false;
+    setStatus('Мапу завантажено (' + im.width + '×' + im.height + '). Тепер калібрування: 2 кліки + метри.');
+    render();
+    URL.revokeObjectURL(url);
+  };
+  im.src = url;
+}
+$('file').addEventListener('change', () => setFile($('file').files[0]));
+cv.addEventListener('dragover', (e) => e.preventDefault());
+cv.addEventListener('drop', (e) => { e.preventDefault(); setFile(e.dataTransfer.files[0]); });
+
+/* ---------- калібрування ---------- */
+$('calibBtn').addEventListener('click', () => {
+  state.calibMode = true;
+  state.clicks = [];
+  state.mpp = null;
+  $('calibBtn').classList.add('active');
+  setStatus('Клік № 1 з двох — на першу точку з відомою відстанню…', 'warn');
+  render();
+});
+
+cv.addEventListener('click', (e) => {
+  if (!state.calibMode || !state.img) return;
+  const r = cv.getBoundingClientRect();
+  const x = (e.clientX - r.left) * (W / r.width);
+  const y = (e.clientY - r.top) * (H / r.height);
+  if (state.clicks.length < 2) state.clicks.push({ x, y });
+  render();
+  if (state.clicks.length === 1) {
+    setStatus('Клік № 2 — на другу точку…', 'warn');
+  } else if (state.clicks.length === 2) {
+    state.calibMode = false;
+    $('calibBtn').classList.remove('active');
+    $('meters').disabled = false;
+    $('applyBtn').disabled = false;
+    $('meters').focus();
+    setStatus('Введіть реальну відстань між точками в МЕТРАХ і натисніть «Застосувати».', 'warn');
+  }
+});
+
+$('applyBtn').addEventListener('click', () => {
+  const m = parseFloat($('meters').value);
+  if (!m || m <= 0 || state.clicks.length !== 2) return;
+  const [a, b] = state.clicks;
+  const dPx = Math.hypot(b.x - a.x, b.y - a.y);
+  state.mpp = m / dPx; // метрів на піксель аркуша
+  state.clicks = [];
+  const cmPerScreen = (100 / state.mpp / PXCM).toFixed(1);
+  setStatus('Калібровано: 100 м = ' + cmPerScreen + ' см на аркуші. Шкала і лінійка додані — зберігайте або друкуйте.', 'ok');
+  render();
+});
+
+$('sepia').addEventListener('change', render);
+
+/* ---------- експорт ---------- */
+$('saveBtn').addEventListener('click', () => {
+  const a = document.createElement('a');
+  a.download = 'mapa-spravy-003.png';
+  a.href = cv.toDataURL('image/png');
+  a.click();
+});
+$('printBtn').addEventListener('click', () => {
+  $('printImg').src = cv.toDataURL('image/png');
+  setTimeout(() => window.print(), 150);
+});
+
+render();
+</script>
+</body>
+</html>
