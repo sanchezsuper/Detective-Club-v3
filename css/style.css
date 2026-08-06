@@ -156,7 +156,7 @@ h2 { font-size: 1.2rem; }
 
 /* Непримітна секретна кнопка */
 .secret-lock {
-  position: fixed; right: .9rem; bottom: .9rem;
+  position: fixed; right: .9rem; bottom: .9rem; z-index: 46;
   background: none; border: none; font-size: .85rem;
   opacity: .18; cursor: pointer; filter: grayscale(1);
   transition: opacity .3s;
@@ -376,8 +376,28 @@ h2 { font-size: 1.2rem; }
 .ticker-track .tk {
   display: inline-block; white-space: nowrap; padding-left: 100%;
   color: #e8e0cc; font-size: .82rem; letter-spacing: .06em;
-  animation: ticker-run 28s linear infinite;
+  animation: ticker-run 60s linear infinite;
 }
+
+/* Нижні вкладки детектива */
+#gameNav {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;
+  display: flex; justify-content: center; gap: .25rem;
+  background: rgba(20, 16, 13, .96); border-top: 2px solid var(--stamp);
+  font-family: var(--mono);
+  padding: .3rem .5rem calc(.3rem + env(safe-area-inset-bottom));
+}
+#gameNav a {
+  color: #d8d2c2; text-decoration: none; font-size: .72rem; letter-spacing: .12em;
+  text-transform: uppercase; padding: .45rem .7rem; border: 1px solid transparent;
+  white-space: nowrap;
+}
+#gameNav a.act { color: #f6f0e2; border-color: var(--stamp); background: rgba(168, 50, 42, .18); }
+body.has-nav .screen { padding-bottom: 4.5rem; }
+/* Секретна кнопка 🔒 — над вкладками, а не під ними */
+body.has-nav .secret-lock { bottom: 3.9rem; }
+/* Бігучий рядок фіналу піднімається над вкладками */
+body.has-nav .ticker { bottom: 3.3rem; }
 @keyframes ticker-run { from { transform: translateX(0); } to { transform: translateX(-100%); } }
 @media (prefers-reduced-motion: reduce) {
   .ticker { animation: none; }

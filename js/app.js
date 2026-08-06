@@ -186,6 +186,7 @@ function route() {
 
   SCREENS.forEach((id) => { $('#screen-' + id).hidden = (id !== name); });
   document.body.dataset.screen = name;
+  updateNav(name);
   window.scrollTo(0, 0);
 
   if (name === 'cabinet') renderCabinet();
@@ -195,6 +196,21 @@ function route() {
   if (name === 'denied') renderDenied();
 }
 window.addEventListener('hashchange', route);
+
+/* Нижні вкладки: з'являються після допуску і ростуть по мірі прогресу */
+function updateNav(name) {
+  const s = load();
+  const hideOn = ['landing', 'register', 'task', 'denied'];
+  const show = !!s.admitted && !hideOn.includes(name);
+  $('#gameNav').hidden = !show;
+  document.body.classList.toggle('has-nav', show);
+  if (!show) return;
+  $('#navDossier').hidden = !s.gateOpen;
+  $('#navPhone').hidden = !s.pin;
+  $('#navSolved').hidden = !s.phoneUnlocked;
+  [['#navCabinet', 'cabinet'], ['#navDossier', 'dossier'], ['#navPhone', 'phone'], ['#navSolved', 'solved']]
+    .forEach(([sel, scr]) => $(sel).classList.toggle('act', scr === name));
+}
 
 /* Кнопки-переходи */
 document.addEventListener('click', (e) => {
@@ -392,6 +408,7 @@ $('#termForm').addEventListener('submit', async (e) => {
   const ok = (await matches($('#termLogin').value, 'login')) && (await matches($('#termPass').value, 'password'));
   if (ok) {
     save({ gateOpen: true });
+    updateNav(document.body.dataset.screen);
     $('#termForm').hidden = true;
     typeLines(log, [...BOOT_LINES, '', '> ДОСТУП НАДАНО.', '> СПРАВУ № 003 ЗНАЙДЕНО В АРХІВІ.'], () => {
       $('#openDossier').hidden = false;
@@ -427,6 +444,7 @@ async function tryDeclassify(pin) {
   try {
     const html = await decryptSecret(pin);
     save({ pin });
+    updateNav(document.body.dataset.screen);
     $('#secretMount').innerHTML = html;
     $('#pinPanel').hidden = true;
     document.querySelectorAll('#dossierBody .blk').forEach((el) => { el.style.opacity = '.25'; });
@@ -480,6 +498,7 @@ $('#phonePadKeys').addEventListener('click', async (e) => {
     phoneEntry = '';
     if (ok) {
       save({ phoneUnlocked: true });
+      updateNav(document.body.dataset.screen);
       updPhoneDots();
       renderPhone();
     } else {
