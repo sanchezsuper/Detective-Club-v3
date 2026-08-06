@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Подяка спецгрупі — фінальний аркуш у контейнер (справа № 003)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #8a7a5c; margin: 0; padding: 2.5rem 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    font-family: 'Courier New', monospace; color: #2b2416;
+  }
+  .hint { color: #efe5cc; font-size: .8rem; max-width: 42rem; text-align: center; }
+  .card {
+    width: 190mm; min-height: 128mm;
+    background:
+      radial-gradient(ellipse at 20% 85%, rgba(90,70,30,.10), transparent 45%),
+      linear-gradient(174deg, #f4edd9 0%, #efe5cc 55%, #eadfc2 100%);
+    box-shadow: 0 10px 30px rgba(30,22,8,.45), inset 0 0 60px rgba(120,95,45,.10);
+    border: 4px double #2b2416;
+    padding: 12mm 16mm; position: relative; text-align: center;
+  }
+  .org { font-weight: 700; letter-spacing: .4em; font-size: 13pt; margin: 0; }
+  .sub { font-size: 8pt; letter-spacing: .2em; color: #6b5d3f; margin: 1mm 0 8mm; }
+  h1 { font-size: 26pt; letter-spacing: .3em; margin: 0 0 6mm; text-transform: uppercase; }
+  .txt { font-size: 10.5pt; line-height: 1.9; max-width: 150mm; margin: 0 auto 6mm; text-align: center; }
+  .names { border-bottom: 1px solid #6b5d3f; min-height: 9mm; width: 140mm; margin: 0 auto 2mm; }
+  .names-cap { font-size: 7pt; letter-spacing: .18em; color: #6b5d3f; margin: 0 0 6mm; }
+  .row { display: flex; justify-content: space-between; align-items: flex-end; max-width: 150mm; margin: 8mm auto 0; font-size: 8.5pt; }
+  .sig { border-top: 1px solid #6b5d3f; padding-top: 1.5mm; letter-spacing: .1em; width: 52mm; }
+  .stamp {
+    display: inline-block; margin: 4mm auto 0;
+    border: 3px double #a8322a; color: #a8322a; padding: 2.5mm 5mm;
+    font-weight: 700; letter-spacing: .22em; font-size: 10pt; transform: rotate(-4deg);
+    opacity: .85; text-transform: uppercase;
+  }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .hint { display: none; }
+    .card { box-shadow: none; margin: 6mm auto; page-break-inside: avoid; }
+    @page { size: A4 landscape; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+<p class="hint">Друк: Ctrl+P, орієнтація альбомна, масштаб 100%. Класти в контейнер найнижчим шаром — це останнє, що побачить група. Імена детективів можна вписати від руки заздалегідь або лишити порожньо.</p>
+<div class="card">
+  <p class="org">СЛУЖБА Х</p>
+  <p class="sub">УПРАВЛІННЯ ОСОБЛИВИХ ОПЕРАЦІЙ · СПРАВА № 003</p>
+  <h1>Подяка</h1>
+  <p class="txt">Спецгрупі детективів — за розкриття справи, яку поліція закрила за тиждень.
+  Ви пройшли шлях від зачиненого архіву до схованки в землі, зібрали докази,
+  перевірили кожну версію і знайшли того, кого ніхто не шукав.</p>
+  <div class="names"></div>
+  <p class="names-cap">СКЛАД СПЕЦГРУПИ</p>
+  <p class="txt">Те, що ви дізналися сьогодні, — державна таємниця.<br>Але каву за перемогу це пити не заважає.</p>
+  <span class="stamp">Справу закрито</span>
+  <div class="row">
+    <span class="sig">Диспетчер Служби Х</span>
+    <span class="sig">Дата · підпис</span>
+  </div>
+</div>
+</body>
+</html>
