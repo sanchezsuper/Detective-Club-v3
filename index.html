@@ -82,7 +82,8 @@
         <span class="id-avatar" id="cabAvatar"></span>
         <div>
           <p class="id-name" id="cabName"></p>
-          <p class="id-rank">звання: СТАЖЕР · справа № 003</p>
+          <p class="id-rank">звання: СТАЖЕР</p>
+          <p class="id-rank">справа № 003</p>
         </div>
       </div>
     </div>
@@ -98,6 +99,10 @@
       <div id="waitBlock">
         <p class="waiting">Очікуємо на початок операції<span class="dots"></span></p>
         <p class="hint-dim">Старт дає керівник групи. Нікуди не йдіть.</p>
+      </div>
+      <div id="countBlock" hidden>
+        <p class="clock countdown" id="countNum">10</p>
+        <p class="hint-dim">Операція починається. Приготуйтеся!</p>
       </div>
       <div id="runBlock" hidden>
         <p class="clock" id="clock">00:00:00</p>
@@ -123,6 +128,7 @@
       <label>&gt; PASSWORD: <input id="termPass" type="password" autocomplete="off"></label>
       <button type="submit">[ УВІЙТИ ]</button>
     </form>
+    <button id="openDossier" class="term-open" data-go="#/dossier" hidden>[ ВІДКРИТИ ДОСЬЄ № 003 ]</button>
   </div>
 
   <!-- Довідка у стилі старих Windows -->
@@ -144,7 +150,7 @@
     <h2>Справа офіцера <span class="blk w6"></span></h2>
 
     <div id="dossierBody">
-      <p>Майор <span class="blk w5"></span> <span class="blk w4"></span>, 12 квітня, о <span class="blk w2"></span>:<span class="blk w2"></span> знайдений <span class="blk w7"></span> за адресою: <strong class="visible-key" id="addrLine">[АДРЕСА МІСЦЯ ПОДІЇ — видима гравцям]</strong>.</p>
+      <p>Майор <span class="blk w5"></span> <span class="blk w4"></span>, 12 квітня, о <span class="blk w2"></span>:<span class="blk w2"></span> знайдений <span class="blk w7"></span> за адресою: <strong class="visible-key" id="addrLine">проспект Михайла Лушпи, 42/1, Суми, Сумська область, 40000 · ТРЦ Sumy Plaza — Zoo House &amp; CO</strong>.</p>
       <p>Тіло та документи вивезені <span class="blk w9"></span>. Свідок: <span class="blk w5"></span>. Мотив: <span class="blk w8"></span>.</p>
       <p>Висновок відділу: <span class="blk w9"></span> <span class="blk w6"></span> <span class="blk w7"></span>.</p>
       <blockquote class="letter">«Поліція закрила справу за тиждень. Ніхто не шукає. Я заплачу́, скільки скажете, — тільки знайдіть, хто це зробив. — О.»</blockquote>
@@ -209,7 +215,7 @@
       </div>
       <div class="ph-notif">
         <p class="ph-app">☎ Виклики</p>
-        <p><b>Пропущений виклик</b> — «О.»</p>
+        <p><span class="ph-missed">✆</span> <b>Пропущений виклик</b> — «О.»</p>
       </div>
       <div class="ph-notif">
         <p class="ph-app">✉ Повідомлення</p>
@@ -224,10 +230,10 @@
         <p class="ph-empty">Файлів немає</p>
       </div>
       <div class="ph-notif">
-        <p class="ph-app">🗒 Нотатки · «Периметр»</p>
-        <p class="mono-note">Т-1: 59-км — 1520 м</p>
-        <p class="mono-note">Т-2: Блакитні озера — 853 м</p>
-        <p class="mono-note">Т-3: Детектив П — 750 м</p>
+        <p class="ph-app">🗒 Нотатки</p>
+        <p class="mono-note">Т-1: Блакитна баня — 990 м</p>
+        <p class="mono-note">Т-2: Агент П — 660 м</p>
+        <p class="mono-note">Т-3: Баня на Заливній — 1000 м</p>
       </div>
     </div>
   </div>

@@ -136,13 +136,20 @@ h2 { font-size: 1.2rem; }
 .hint-dim.center { text-align: center; }
 
 .waiting { font-family: var(--mono); text-transform: uppercase; letter-spacing: .12em; margin: 0; }
-.dots::after { content: '…'; animation: dots 1.5s steps(4) infinite; }
+/* Фіксована ширина під три крапки — інакше останнє слово стрибає на новий рядок */
+.dots::after {
+  content: '…'; animation: dots 1.5s steps(4) infinite;
+  display: inline-block; width: 1.2em; text-align: left;
+}
 @keyframes dots { 0% { content: ''; } 25% { content: '.'; } 50% { content: '..'; } 75% { content: '...'; } }
 .clock {
   font-family: var(--mono); font-size: clamp(2.2rem, 9vw, 3.4rem);
   letter-spacing: .1em; margin: 0; font-variant-numeric: tabular-nums;
 }
 .clock.overtime { color: var(--stamp); }
+/* Відлік 10…1 перед стартом операції */
+.clock.countdown { color: var(--stamp); animation: countPulse 1s ease-in-out infinite; }
+@keyframes countPulse { 0%, 100% { opacity: 1; } 50% { opacity: .45; } }
 #briefing { margin-top: 1.2rem; border-top: 1px solid var(--line); padding-top: 1rem; }
 #briefing p { margin: 0 0 .4rem; }
 
@@ -179,6 +186,15 @@ h2 { font-size: 1.2rem; }
   letter-spacing: .1em;
 }
 .term button[type="submit"]:hover { background: rgba(125, 219, 132, .12); }
+/* Кнопка відкриття досьє після успішного входу — в стилі термінала */
+.term-open {
+  display: inline-block; margin-top: 1rem;
+  background: transparent; border: 1px solid var(--term-ink); color: var(--term-ink);
+  font-family: var(--mono); font-size: .95rem; padding: .5rem 1rem; cursor: pointer;
+  letter-spacing: .1em; animation: termBlink 1.2s steps(2) infinite;
+}
+.term-open:hover { background: rgba(125, 219, 132, .12); animation: none; }
+@keyframes termBlink { 50% { border-color: var(--term-dim); } }
 .info-btn {
   position: absolute; top: .8rem; right: .8rem;
   width: 1.6rem; height: 1.6rem; border-radius: 50%;
@@ -309,6 +325,7 @@ h2 { font-size: 1.2rem; }
 }
 .ph-notif p { margin: 0 0 .35rem; }
 .ph-app { font-size: .7rem; text-transform: uppercase; letter-spacing: .1em; color: #9aa0ad; }
+.ph-missed { color: #e0483e; font-size: 1.1em; font-weight: 700; }
 .bubble { border-radius: .9rem; padding: .4rem .7rem; margin: .25rem 0; max-width: 85%; }
 .bubble.in { background: #2a2d36; }
 .bubble.out { background: #1e3a5c; margin-left: auto; }

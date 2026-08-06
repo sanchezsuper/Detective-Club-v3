@@ -139,7 +139,7 @@ function route() {
   if (!isHost) {
     if (['task'].includes(name) && !s.name) name = 'register';
     if (['cabinet'].includes(name) && !s.admitted) name = s.name ? 'task' : 'landing';
-    if (['terminal'].includes(name) && !s.startedAt) name = 'cabinet';
+    if (['terminal'].includes(name) && !gameRunning(s)) name = 'cabinet';
     if (['dossier'].includes(name) && !s.gateOpen) name = s.startedAt ? 'terminal' : 'cabinet';
     if (name === 'cabinet' && !s.admitted) name = 'landing';
   }
@@ -260,17 +260,27 @@ function renderLobby() {
   }
 }
 
+/* СТАРТ призначає startedAt на 10 с у майбутнє — до того моменту
+   у всіх іде синхронний відлік 10…1 (sync.offset вирівнює годинники) */
+const gameRunning = (s) => !!s.startedAt && Date.now() + sync.offset >= s.startedAt;
+
 function updateClock() {
   const s = load();
+  const now = Date.now() + sync.offset;
   const started = !!s.startedAt;
+  const running = started && now >= s.startedAt;
   $('#waitBlock').hidden = started;
-  $('#runBlock').hidden = !started;
-  $('#secretLock').hidden = !started;
+  $('#countBlock').hidden = !started || running;
+  $('#runBlock').hidden = !running;
+  $('#secretLock').hidden = !running;
   if (!started) return;
+  if (!running) {
+    $('#countNum').textContent = Math.max(1, Math.ceil((s.startedAt - now) / 1000));
+    return;
+  }
 
-  // Хронометр без дедлайну: просто фіксує тривалість операції.
-  // sync.offset вирівнює локальний годинник із серверним часом Firebase.
-  const elapsed = Date.now() + sync.offset - s.startedAt;
+  // Хронометр без дедлайну: просто фіксує тривалість операції
+  const elapsed = now - s.startedAt;
   const hh = String(Math.floor(elapsed / 3600000)).padStart(2, '0');
   const mm = String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0');
   const ss = String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0');
@@ -316,6 +326,15 @@ function typeLines(el, lines, done) {
 function bootTerminal() {
   if (termBooted) return;
   termBooted = true;
+  // якщо доступ уже надано (повернення/перезавантаження) — одразу кнопка досьє
+  if (load().gateOpen) {
+    const lines = [...BOOT_LINES.slice(0, -1), 'СЕСІЮ ВІДНОВЛЕНО. ДОСТУП НАДАНО.'];
+    typeLines($('#termLog'), lines, () => {
+      $('#termLog').textContent = lines.join('\n');
+      $('#openDossier').hidden = false;
+    });
+    return;
+  }
   typeLines($('#termLog'), BOOT_LINES, () => {
     $('#termLog').textContent = BOOT_LINES.join('\n');
     $('#termForm').hidden = false;
@@ -330,8 +349,8 @@ $('#termForm').addEventListener('submit', async (e) => {
   if (ok) {
     save({ gateOpen: true });
     $('#termForm').hidden = true;
-    typeLines(log, [...BOOT_LINES, '', '> ДОСТУП НАДАНО.', '> ВІДКРИВАЮ СПРАВУ № 003…'], () => {
-      setTimeout(() => { location.hash = '#/dossier'; }, 700);
+    typeLines(log, [...BOOT_LINES, '', '> ДОСТУП НАДАНО.', '> СПРАВУ № 003 ЗНАЙДЕНО В АРХІВІ.'], () => {
+      $('#openDossier').hidden = false;
     });
   } else {
     log.textContent = BOOT_LINES.join('\n') + '\n\n> ДОСТУП ВІДХИЛЕНО. СПРОБУ ЗАФІКСОВАНО.';
@@ -447,12 +466,10 @@ async function initHost() {
   isHost = true;
   $('#hostbar').hidden = false;
   $('#hostStart').addEventListener('click', () => {
-    save({ startedAt: Date.now() }); // миттєво локально (fallback)
-    if (sync.on) {
-      // серверний час розійдеться з локальним на мілісекунди —
-      // слухач game/startedAt перезапише локальне значення у всіх
-      sync.room.child('game/startedAt').set(firebase.database.ServerValue.TIMESTAMP);
-    }
+    // старт через 10 с: у всіх гравців синхронно йде відлік 10…1
+    const at = Date.now() + sync.offset + 10000;
+    save({ startedAt: at });
+    if (sync.on) sync.room.child('game/startedAt').set(at);
     updateClock();
   });
   $('#hostReset').addEventListener('click', () => {
