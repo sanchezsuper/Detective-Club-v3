@@ -125,6 +125,7 @@ h2 { font-size: 1.2rem; }
 .lobby .pl { flex: 1; }
 .lobby .st { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .lobby .st.ok { color: #4a7a3a; }
+.lobby .st.bad { color: var(--stamp); }
 /* Кнопка видалення гравця — лише в режимі ведучого */
 .lobby .kick {
   flex: none; background: none; border: 1px solid var(--stamp); color: var(--stamp);
@@ -346,6 +347,12 @@ h2 { font-size: 1.2rem; }
 @media (prefers-reduced-motion: reduce) { .denied-title { animation: none; } }
 .denied-sub { color: #b0847e; margin: 0 0 1.4rem; line-height: 1.7; }
 .denied-code { color: #6e4a44; font-size: .75rem; letter-spacing: .2em; }
+.denied-timer {
+  margin: 1.6rem auto 0; padding: .7rem 1.1rem; display: inline-block;
+  border: 1px dashed #e05545; color: #e05545; letter-spacing: .14em;
+  font-size: .85rem; line-height: 2;
+}
+.denied-timer span { font-size: 1.3em; font-variant-numeric: tabular-nums; }
 
 /* Фінал */
 .solved-text { max-width: 52ch; }

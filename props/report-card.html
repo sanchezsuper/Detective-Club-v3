@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Рапорт 003-Р — реквізит у контейнер (справа № 003)</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #8a7a5c; margin: 0; padding: 2.5rem 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    font-family: 'Courier New', monospace; color: #2b2416;
+  }
+  .hint { color: #efe5cc; font-size: .8rem; max-width: 42rem; text-align: center; }
+  .card {
+    width: 148mm; min-height: 105mm; /* A5 альбомна */
+    background:
+      radial-gradient(ellipse at 80% 10%, rgba(139,109,31,.10), transparent 40%),
+      linear-gradient(174deg, #f4edd9 0%, #efe5cc 55%, #eadfc2 100%);
+    box-shadow: 0 10px 30px rgba(30,22,8,.45), inset 0 0 50px rgba(120,95,45,.10);
+    border: 1px solid #b7a37a;
+    padding: 9mm 11mm;
+    position: relative;
+  }
+  .top { display: flex; justify-content: space-between; align-items: baseline; border-bottom: 2px solid #2b2416; padding-bottom: 3mm; }
+  .org { font-weight: 700; letter-spacing: .3em; font-size: 12pt; }
+  .form-no { font-size: 8pt; letter-spacing: .18em; color: #6b5d3f; }
+  h1 { font-size: 13pt; letter-spacing: .14em; margin: 6mm 0 3mm; text-transform: uppercase; }
+  .body-row { display: flex; gap: 8mm; align-items: flex-start; }
+  .txt { flex: 1; font-size: 9.5pt; line-height: 1.75; }
+  .txt p { margin: 0 0 3mm; }
+  .order { font-weight: 700; text-transform: uppercase; letter-spacing: .06em; }
+  .qr-box { text-align: center; flex: none; }
+  .qr-box img { width: 42mm; height: 42mm; display: block; border: 1px solid #2b2416; padding: 1.5mm; background: #fff; }
+  .qr-cap { font-size: 7pt; letter-spacing: .12em; color: #6b5d3f; margin-top: 1.5mm; }
+  .stamp {
+    position: absolute; right: 14mm; bottom: 7mm;
+    border: 3px double #a8322a; color: #a8322a; padding: 2mm 4mm;
+    font-weight: 700; letter-spacing: .22em; font-size: 9pt; transform: rotate(-7deg);
+    opacity: .85; text-transform: uppercase;
+  }
+  .foot { position: absolute; left: 11mm; bottom: 8mm; font-size: 7pt; color: #6b5d3f; letter-spacing: .14em; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .hint { display: none; }
+    .card { box-shadow: none; margin: 8mm auto; page-break-inside: avoid; }
+    @page { size: A4 portrait; margin: 10mm; }
+  }
+</style>
+</head>
+<body>
+<p class="hint">Друк: Ctrl+P (масштаб 100%). Картку — в контейнер, останнім шаром поверх документів, щоб її побачили першою.</p>
+<div class="card">
+  <div class="top">
+    <span class="org">СЛУЖБА Х</span>
+    <span class="form-no">ФОРМА 003-Р · ЄДИНИЙ ПРИМІРНИК</span>
+  </div>
+  <h1>Рапорт про завершення справи № 003</h1>
+  <div class="body-row">
+    <div class="txt">
+      <p>Групі детективів, що розкрила схованку.</p>
+      <p>Усі матеріали справи вилучено вами в повному обсязі. Польову частину операції завершено.</p>
+      <p class="order">Доповідьте керівництву: відскануйте код і введіть номер знайденого посвідчення.</p>
+    </div>
+    <div class="qr-box">
+      <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAbwAAAG8CAIAAAAq0oeIAAAJA0lEQVR4nO3dPY5lNRhFUQr1HAgQ8x8YImAUl5yg5K223J/vW2sA77+2nJzy1/M8vwGw5vdf/QIAbiKaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBD92PdBff/6x66Gu8/c//x57rpOf81vf10krn+HKe9/1Xbz1c16x6zN00gQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBg2/Z8xckt8y4nt7q7NsjT9sVv3cvvMm2ffuNnePI35qQJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwdHt+Yq37pRPbodP2vV9TfsudrnxO13xyZ+hkyZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIE47bnn+zkjvutm/Eb7/6edk8933PSBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgMD2fJBdm/FdW+Zpm+iTm/pp2/xpd39/MidNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2AQDQBAtEECMZtzz95Yztt673Lru/05L3nJzfsN/7mb3zNuzhpAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQHB0e/7WbfUuu+71nvY4K6a9rxU3fj67nuuTOWkCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAsG17/sn3IO/y1juyT7pxd7/i5F6e7zlpAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQPD1PM+WB7pxz7vLyT3vtPuv3/red5l2n7u/r5/npAkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBtu35irfuXj95X3xy537StPd14+t563fqpAkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBj1/9Av7v5KZ12h582v3OK6Ztq0+a9t5P/sam/Z+Ek78fJ02AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQItm3P37rRnvaa37r5fev7WnHj/1JYMe3e812cNAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyC48t7zFdO28NM20dM+57c+142v+aSTfzu7OGkCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZA8PU8z5YHstX9eW/duU/7bUy7Z3zXc62Y9vd10q735aQJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwbZ7z6fdX7zruabt03eZti/+5H36imk77hU3fs4rnDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMg2Hbv+YpP3s9O26e/daO94uTv8K3v66RpfztOmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRBsu/d82v562rZ6xVvv/t5l2m/sxs/wk/+fwK7X46QJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwbbt+S5v3XpPu2t72us5+Ti7TPsMT/4O37phX+GkCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAMHX8zy/+jVk0+6S3uXGPe+0LfPJ93XjHfSf/Fy7OGkCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAsO3e82kb0mm74Gnva8Unf6crpv1+pv1Phmm/n12cNAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyDYdu/5tJ3pjbvgadvqFdPuyJ62U15x49/OLjd+706aAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEGy793zFtJ3pW/fgu5zcIE+7+3vaPePTfvO7nuvGv0EnTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAiObs+nObkvnrb5XXmuaZvfFdM+w2lu/E6nvR4nTYBANAEC0QQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAjGbc93bUhPPs5b7+zetU9f8dbP8EY3bupPctIECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgEE2A4Ot5ni0PZDv8vRv3vCe/ixXT7r9eMe3v4qS33o3upAkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBtu0535u2HZ62B7fR/t603f207/0kJ02AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIfux6oBs3v7usbGOn7a/dLz/Hyc/nxq33tNfspAkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgDBtu35immb1hW7dsHTtvkn7z1/qxvf+7S70U8+16737qQJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAwdHt+YpPviP75B3i0+49P/k4u0zbcb91Cz/tfTlpAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQDBue/7Jpm2rb9w7v3VTv8vJ++6nvfddnDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMgsD0f5ORWd+W5pm2Hb9yDT7vz/cZt/jROmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCM257fuEVdcfJ93bhBPrlTvvGu7RXTvtMVN+7TnTQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBANAEC0QQIRBMg+HqeZ8sDvXXPu2La/eArTu55b7wbfdpz7TLtjvUb70930gQIRBMgEE2AQDQBAtEECEQTIBBNgEA0AQLRBAhEEyAQTYBg2/Yc4BM4aQIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkAgmgCBaAIEogkQiCZAIJoAgWgCBKIJEIgmQCCaAIFoAgSiCRCIJkDwH6HIFVvmEbNfAAAAAElFTkSuQmCC" alt="QR: доповідь керівництву">
+      <p class="qr-cap">КАНАЛ ДОПОВІДІ · 003</p>
+    </div>
+  </div>
+  <p class="foot">СЛУЖБА Х · АРХІВ · СПРАВА № 003</p>
+  <span class="stamp">Цілком таємно</span>
+</div>
+</body>
+</html>

@@ -53,6 +53,7 @@ const save = (patch) => {
 /* Режим ведучого вмикається лише правильним ключем: ?host=<ключ> */
 let isHost = false;
 const hostParam = new URLSearchParams(location.search).get('host');
+let hostPending = !!hostParam; // true, поки асинхронно перевіряється ключ
 
 /* ---------- Спільне лобі (Firebase RTDB, опційно) ----------
    Дані живуть під /rooms/case003: players/<id> + game/startedAt.
@@ -117,10 +118,40 @@ function syncPublish(isNew) {
   const s = load();
   if (!s.playerId || !s.name) return;
   const ref = sync.room.child('players/' + s.playerId);
-  const data = { name: s.name, avatar: s.avatar || '', admitted: !!s.admitted, online: true };
+  const data = { name: s.name, avatar: s.avatar || '', admitted: !!s.admitted, online: true, blockedUntil: s.blockedUntil || null };
   if (isNew) data.joinedAt = firebase.database.ServerValue.TIMESTAMP;
   ref.update(data);
   ref.child('online').onDisconnect().set(false);
+}
+
+/* ---------- Пастка «ДОСТУП ЗАБОРОНЕНО» ----------
+   Гравець, що відсканував QR-обманку, блокується на BLOCK_MS:
+   всі екрани примусово ведуть на denied, іде зворотний відлік. */
+const BLOCK_MS = 3 * 60000;
+let deniedInt = null;
+
+function renderDenied() {
+  const t = $('#deniedTimer');
+  const s = load();
+  // Таймер і автоповернення — лише при АКТИВНОМУ блокуванні;
+  // прострочений blockedUntil (чи ведучий) — просто статичний екран
+  if (isHost || !s.blockedUntil || s.blockedUntil <= Date.now()) { t.hidden = true; return; }
+  t.hidden = false;
+  const tick = () => {
+    const left = (load().blockedUntil || 0) - Date.now();
+    if (left <= 0) {
+      clearInterval(deniedInt);
+      const s2 = load();
+      location.hash = s2.gateOpen ? '#/dossier' : (s2.admitted ? '#/cabinet' : '#/');
+      return;
+    }
+    const mm = String(Math.floor(left / 60000)).padStart(2, '0');
+    const ss = String(Math.floor((left % 60000) / 1000)).padStart(2, '0');
+    $('#deniedLeft').textContent = `${mm}:${ss}`;
+  };
+  clearInterval(deniedInt);
+  tick();
+  deniedInt = setInterval(tick, 500);
 }
 
 const newPlayerId = () =>
@@ -142,6 +173,15 @@ function route() {
     if (['terminal'].includes(name) && !gameRunning(s)) name = 'cabinet';
     if (['dossier'].includes(name) && !s.gateOpen) name = s.startedAt ? 'terminal' : 'cabinet';
     if (name === 'cabinet' && !s.admitted) name = 'landing';
+
+    // Пастка «ДОСТУП ЗАБОРОНЕНО»: скан QR-обманки блокує детектива.
+    // hostPending: ключ ведучого ще перевіряється — пастку не зводимо,
+    // інакше ведучий із профілем гравця блокує сам себе.
+    if (name === 'denied' && s.name && !hostPending && (!s.blockedUntil || s.blockedUntil <= Date.now())) {
+      save({ blockedUntil: Date.now() + BLOCK_MS });
+      syncPublish();
+    }
+    if (s.name && load().blockedUntil > Date.now()) name = 'denied';
   }
 
   SCREENS.forEach((id) => { $('#screen-' + id).hidden = (id !== name); });
@@ -152,6 +192,7 @@ function route() {
   if (name === 'terminal') bootTerminal();
   if (name === 'dossier') renderDossier();
   if (name === 'phone') renderPhone();
+  if (name === 'denied') renderDenied();
 }
 window.addEventListener('hashchange', route);
 
@@ -232,8 +273,11 @@ function renderLobby() {
     who.className = 'pl';
     who.textContent = `${p.avatar || ''} ${p.name || 'Детектив'}${id && id === s.playerId ? ' (ви)' : ''}`;
     const st = document.createElement('span');
-    st.className = 'st' + (p.admitted ? ' ok' : '');
-    st.textContent = p.online === false ? 'не на зв’язку' : (p.admitted ? 'допуск отримано' : 'проходить допуск');
+    const blocked = p.blockedUntil && p.blockedUntil > Date.now();
+    st.className = 'st' + (blocked ? ' bad' : p.admitted ? ' ok' : '');
+    st.textContent = blocked ? 'заблоковано'
+      : p.online === false ? 'не на зв’язку'
+      : (p.admitted ? 'допуск отримано' : 'проходить допуск');
     li.append(who, st);
     if (isHost && sync.on && id) {
       const del = document.createElement('button');
@@ -461,8 +505,9 @@ $('#finForm').addEventListener('submit', async (e) => {
 
 /* ---------- Панель ведучого ---------- */
 async function initHost() {
-  if (!hostParam || !crypto.subtle) return;
-  if (!(await matches(hostParam, 'hostKey'))) return;
+  if (!hostParam || !crypto.subtle) { hostPending = false; return; }
+  if (!(await matches(hostParam, 'hostKey'))) { hostPending = false; route(); return; }
+  hostPending = false;
   isHost = true;
   $('#hostbar').hidden = false;
   $('#hostStart').addEventListener('click', () => {
