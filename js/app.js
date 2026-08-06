@@ -182,6 +182,9 @@ function route() {
       syncPublish();
     }
     if (s.name && load().blockedUntil > Date.now()) name = 'denied';
+
+    // Сканування QR з рапорта відкриває вкладку ДОПОВІДЬ назавжди
+    if (name === 'solved' && s.name && !hostPending && !s.reportOpen) save({ reportOpen: true });
   }
 
   SCREENS.forEach((id) => { $('#screen-' + id).hidden = (id !== name); });
@@ -207,7 +210,7 @@ function updateNav(name) {
   if (!show) return;
   $('#navDossier').hidden = !s.gateOpen;
   $('#navPhone').hidden = !s.pin;
-  $('#navSolved').hidden = !s.phoneUnlocked;
+  $('#navSolved').hidden = !s.reportOpen;
   [['#navCabinet', 'cabinet'], ['#navDossier', 'dossier'], ['#navPhone', 'phone'], ['#navSolved', 'solved']]
     .forEach(([sel, scr]) => $(sel).classList.toggle('act', scr === name));
 }
