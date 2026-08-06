@@ -122,8 +122,16 @@ h2 { font-size: 1.2rem; }
   padding: .5rem .2rem; border-bottom: 1px dashed var(--line);
   font-size: .95rem;
 }
+.lobby .pl { flex: 1; }
 .lobby .st { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em; text-transform: uppercase; color: var(--muted); }
 .lobby .st.ok { color: #4a7a3a; }
+/* Кнопка видалення гравця — лише в режимі ведучого */
+.lobby .kick {
+  flex: none; background: none; border: 1px solid var(--stamp); color: var(--stamp);
+  font-family: var(--mono); font-size: .7rem; line-height: 1;
+  padding: .18rem .42rem; cursor: pointer; border-radius: 2px;
+}
+.lobby .kick:hover { background: var(--stamp); color: #f4efe2; }
 .hint-dim { color: var(--muted); font-size: .85rem; margin: .7rem 0 0; }
 .hint-dim.center { text-align: center; }
 

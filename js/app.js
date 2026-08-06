@@ -1,6 +1,7 @@
 /* Детективний клуб · справа № 003 — логіка прототипу.
-   Стан гри — у localStorage (один пристрій). Мультиплеєрна
-   синхронізація лобі/таймера — наступний етап (потрібен бекенд). */
+   Стан гри — у localStorage. Якщо в js/firebase-config.js вставлено конфіг
+   Firebase, вмикається спільне лобі: всі бачать одне одного, СТАРТ ведучого
+   синхронний, ведучий може видаляти гравців. Без конфігу — автономний режим. */
 
 'use strict';
 
@@ -52,6 +53,78 @@ const save = (patch) => {
 /* Режим ведучого вмикається лише правильним ключем: ?host=<ключ> */
 let isHost = false;
 const hostParam = new URLSearchParams(location.search).get('host');
+
+/* ---------- Спільне лобі (Firebase RTDB, опційно) ----------
+   Дані живуть під /rooms/case003: players/<id> + game/startedAt.
+   Все нижче — за guard'ом sync.on: без конфігу жодного ефекту. */
+const sync = { on: false, room: null, offset: 0, players: null, sawSelf: false, resetting: false };
+
+function syncInit() {
+  if (typeof firebase === 'undefined' || !window.FIREBASE_CONFIG) return;
+  try {
+    firebase.initializeApp(window.FIREBASE_CONFIG);
+    sync.room = firebase.database().ref('rooms/case003');
+  } catch (err) {
+    console.warn('Firebase недоступний, працюю автономно:', err);
+    return;
+  }
+  sync.on = true;
+
+  // Поправка на розбіжність годинника клієнта з сервером
+  firebase.database().ref('.info/serverTimeOffset').on('value', (sn) => {
+    sync.offset = sn.val() || 0;
+  });
+
+  // Синхронний старт: серверний timestamp дзеркалиться в localStorage,
+  // тож updateClock і охорона маршрутів працюють без змін
+  sync.room.child('game/startedAt').on('value', (sn) => {
+    const t = sn.val();
+    if (t && load().startedAt !== t) {
+      save({ startedAt: t });
+      if (document.body.dataset.screen === 'cabinet') updateClock();
+    }
+  });
+
+  // Лобі + самовидалення (ведучий видалив мій запис → профіль скидається)
+  sync.room.child('players').on('value', (sn) => {
+    sync.players = sn.val() || {};
+    const me = load();
+    if (me.playerId) {
+      if (sync.players[me.playerId]) {
+        sync.sawSelf = true;
+      } else if (sync.sawSelf && !sync.resetting) {
+        syncKicked();
+        return;
+      }
+    }
+    if (document.body.dataset.screen === 'cabinet') renderLobby();
+  });
+
+  syncPublish();
+}
+
+function syncKicked() {
+  sync.sawSelf = false;
+  localStorage.removeItem('dc3');
+  alert('Ведучий оновив склад групи — ваш профіль скинуто. Зареєструйтеся, будь ласка, знову.');
+  location.hash = '#/register';
+  location.reload();
+}
+
+/* Публікує/оновлює власний запис у лобі (ідемпотентно) */
+function syncPublish(isNew) {
+  if (!sync.on) return;
+  const s = load();
+  if (!s.playerId || !s.name) return;
+  const ref = sync.room.child('players/' + s.playerId);
+  const data = { name: s.name, avatar: s.avatar || '', admitted: !!s.admitted, online: true };
+  if (isNew) data.joinedAt = firebase.database.ServerValue.TIMESTAMP;
+  ref.update(data);
+  ref.child('online').onDisconnect().set(false);
+}
+
+const newPlayerId = () =>
+  (crypto.randomUUID ? crypto.randomUUID() : 'p' + Math.random().toString(36).slice(2) + Date.now().toString(36));
 
 /* ---------- Роутер ---------- */
 const SCREENS = ['landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved'];
@@ -109,7 +182,11 @@ $('#regForm').addEventListener('submit', (e) => {
   e.preventDefault();
   const name = $('#regName').value.trim();
   if (!name) return;
-  save({ name, avatar: pickedAvatar });
+  // playerId живе в localStorage: повторний вхід з того ж браузера
+  // не створює дубля в лобі
+  const isNew = !load().playerId;
+  save({ name, avatar: pickedAvatar, playerId: load().playerId || newPlayerId() });
+  syncPublish(isNew);
   location.hash = '#/task';
 });
 
@@ -118,6 +195,7 @@ $('#taskForm').addEventListener('submit', async (e) => {
   e.preventDefault();
   if (await matches($('#taskAnswer').value, 'admission')) {
     save({ admitted: true });
+    syncPublish();
     $('#taskForm').hidden = true;
     $('#taskFail').hidden = true;
     $('#taskGranted').hidden = false;
@@ -134,15 +212,52 @@ function renderCabinet() {
   $('#cabName').textContent = s.name || 'Детектив';
   $('#cabAvatar').textContent = s.avatar || AVATARS[0];
 
-  const lobby = $('#lobbyList');
-  lobby.innerHTML = '';
-  const li = document.createElement('li');
-  li.innerHTML = `<span>${s.avatar || ''} ${s.name || 'Детектив'}</span><span class="st ok">допуск отримано</span>`;
-  lobby.appendChild(li);
+  renderLobby();
 
   updateClock();
   if (clockTimer) clearInterval(clockTimer);
   clockTimer = setInterval(updateClock, 1000);
+}
+
+/* Лобі: зі спільною базою — всі детективи (імена від інших гравців
+   рендеряться лише через textContent); автономно — тільки локальний. */
+function renderLobby() {
+  const lobby = $('#lobbyList');
+  lobby.innerHTML = '';
+  const s = load();
+
+  const addRow = (id, p) => {
+    const li = document.createElement('li');
+    const who = document.createElement('span');
+    who.className = 'pl';
+    who.textContent = `${p.avatar || ''} ${p.name || 'Детектив'}${id && id === s.playerId ? ' (ви)' : ''}`;
+    const st = document.createElement('span');
+    st.className = 'st' + (p.admitted ? ' ok' : '');
+    st.textContent = p.online === false ? 'не на зв’язку' : (p.admitted ? 'допуск отримано' : 'проходить допуск');
+    li.append(who, st);
+    if (isHost && sync.on && id) {
+      const del = document.createElement('button');
+      del.type = 'button';
+      del.className = 'kick';
+      del.textContent = '✕';
+      del.title = 'Видалити детектива зі складу групи';
+      del.addEventListener('click', () => {
+        if (confirm(`Видалити «${p.name || 'Детектив'}» зі складу групи? Його профіль скинеться.`)) {
+          sync.room.child('players/' + id).remove();
+        }
+      });
+      li.appendChild(del);
+    }
+    lobby.appendChild(li);
+  };
+
+  if (sync.on && sync.players && Object.keys(sync.players).length) {
+    Object.entries(sync.players)
+      .sort((a, b) => (a[1].joinedAt || 0) - (b[1].joinedAt || 0))
+      .forEach(([id, p]) => addRow(id, p));
+  } else if (s.name) {
+    addRow(null, { name: s.name, avatar: s.avatar, admitted: !!s.admitted });
+  }
 }
 
 function updateClock() {
@@ -153,8 +268,9 @@ function updateClock() {
   $('#secretLock').hidden = !started;
   if (!started) return;
 
-  // Хронометр без дедлайну: просто фіксує тривалість операції
-  const elapsed = Date.now() - s.startedAt;
+  // Хронометр без дедлайну: просто фіксує тривалість операції.
+  // sync.offset вирівнює локальний годинник із серверним часом Firebase.
+  const elapsed = Date.now() + sync.offset - s.startedAt;
   const hh = String(Math.floor(elapsed / 3600000)).padStart(2, '0');
   const mm = String(Math.floor((elapsed % 3600000) / 60000)).padStart(2, '0');
   const ss = String(Math.floor((elapsed % 60000) / 1000)).padStart(2, '0');
@@ -331,18 +447,30 @@ async function initHost() {
   isHost = true;
   $('#hostbar').hidden = false;
   $('#hostStart').addEventListener('click', () => {
-    save({ startedAt: Date.now() });
+    save({ startedAt: Date.now() }); // миттєво локально (fallback)
+    if (sync.on) {
+      // серверний час розійдеться з локальним на мілісекунди —
+      // слухач game/startedAt перезапише локальне значення у всіх
+      sync.room.child('game/startedAt').set(firebase.database.ServerValue.TIMESTAMP);
+    }
     updateClock();
   });
   $('#hostReset').addEventListener('click', () => {
+    if (sync.on) {
+      if (!confirm('Скинути гру для ВСІХ гравців? Профілі всіх детективів буде видалено.')) return;
+      sync.resetting = true; // щоб ведучому не показалось власне «вас видалено»
+      sync.room.remove(); // гравці отримають скидання через слухач players
+    }
     localStorage.removeItem('dc3');
     location.hash = '#/';
     location.reload();
   });
   route(); // перерахувати охорону маршрутів уже як ведучий
+  if (document.body.dataset.screen === 'cabinet') renderLobby(); // домалювати кнопки ✕
 }
 
 /* ---------- Старт ---------- */
 renderAvatars();
 route();
 initHost();
+syncInit();
