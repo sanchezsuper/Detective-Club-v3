@@ -58,7 +58,7 @@ let hostPending = !!hostParam; // true, поки асинхронно перев
 /* ---------- Спільне лобі (Firebase RTDB, опційно) ----------
    Дані живуть під /rooms/case003: players/<id> + game/startedAt.
    Все нижче — за guard'ом sync.on: без конфігу жодного ефекту. */
-const sync = { on: false, room: null, offset: 0, players: null, sawSelf: false, resetting: false };
+const sync = { on: false, room: null, offset: 0, players: null, sawSelf: false, resetting: false, prelaunch: false };
 
 function syncInit() {
   if (typeof firebase === 'undefined' || !window.FIREBASE_CONFIG) return;
@@ -86,6 +86,14 @@ function syncInit() {
     }
   });
 
+  // Заглушка «справа готується»: вмикається/вимикається кнопкою ведучого,
+  // у гостей екран змінюється наживо без оновлення сторінки
+  sync.room.child('prelaunch').on('value', (sn) => {
+    sync.prelaunch = !!sn.val();
+    updateHostGate();
+    route();
+  });
+
   // Лобі + самовидалення (ведучий видалив мій запис → профіль скидається)
   sync.room.child('players').on('value', (sn) => {
     sync.players = sn.val() || {};
@@ -110,6 +118,17 @@ function syncKicked() {
   alert('Ведучий оновив склад групи — ваш профіль скинуто. Зареєструйтеся, будь ласка, знову.');
   location.hash = '#/register';
   location.reload();
+}
+
+/* Кнопка ведучого «Набір: …» — видима лише зі спільною базою */
+function updateHostGate() {
+  const b = $('#hostGate');
+  if (!isHost || !sync.on) return;
+  b.hidden = false;
+  b.textContent = sync.prelaunch ? 'Набір: ЗАКРИТО 🔒' : 'Набір: ВІДКРИТО ✓';
+  b.title = sync.prelaunch
+    ? 'Гості бачать «справа готується». Натисніть, щоб відкрити лендінг усім.'
+    : 'Лендінг відкритий. Натисніть, щоб показувати гостям «справа готується».';
 }
 
 /* Публікує/оновлює власний запис у лобі (ідемпотентно) */
@@ -158,7 +177,7 @@ const newPlayerId = () =>
   (crypto.randomUUID ? crypto.randomUUID() : 'p' + Math.random().toString(36).slice(2) + Date.now().toString(36));
 
 /* ---------- Роутер ---------- */
-const SCREENS = ['landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved'];
+const SCREENS = ['prelaunch', 'landing', 'register', 'task', 'cabinet', 'terminal', 'dossier', 'phone', 'denied', 'solved'];
 
 function route() {
   const hash = location.hash || '#/';
@@ -168,6 +187,10 @@ function route() {
   // Охорона маршрутів (ведучий ходить вільно)
   const s = load();
   if (!isHost) {
+    // Набір ще не відкрито: гості з візиток бачать «справа готується».
+    // Зареєстрованих (та ведучого) заглушка не стосується.
+    if (sync.prelaunch && !s.name) name = 'prelaunch';
+    else if (name === 'prelaunch') name = 'landing';
     if (['task'].includes(name) && !s.name) name = 'register';
     if (['cabinet'].includes(name) && !s.admitted) name = s.name ? 'task' : 'landing';
     if (['terminal'].includes(name) && !gameRunning(s)) name = 'cabinet';
@@ -203,7 +226,7 @@ window.addEventListener('hashchange', route);
 /* Нижні вкладки: з'являються після допуску і ростуть по мірі прогресу */
 function updateNav(name) {
   const s = load();
-  const hideOn = ['landing', 'register', 'task', 'denied'];
+  const hideOn = ['prelaunch', 'landing', 'register', 'task', 'denied'];
   const show = !!s.admitted && !hideOn.includes(name);
   $('#gameNav').hidden = !show;
   document.body.classList.toggle('has-nav', show);
@@ -549,6 +572,10 @@ async function initHost() {
     location.hash = '#/';
     location.reload();
   });
+  $('#hostGate').addEventListener('click', () => {
+    if (sync.on) sync.room.child('prelaunch').set(!sync.prelaunch);
+  });
+  updateHostGate();
   route(); // перерахувати охорону маршрутів уже як ведучий
   if (document.body.dataset.screen === 'cabinet') renderLobby(); // домалювати кнопки ✕
 }

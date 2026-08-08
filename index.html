@@ -14,6 +14,7 @@
   <span class="hb-label">ВЕДУЧИЙ</span>
   <button id="hostStart">СТАРТ</button>
   <button id="hostReset">Скинути гру</button>
+  <button id="hostGate" hidden></button>
   <nav>
     <a href="#/">лендінг</a><a href="#/register">реєстрація</a><a href="#/task">допуск</a><a href="#/cabinet">кабінет</a><a href="#/terminal">термінал</a><a href="#/dossier">досьє</a><a href="#/phone">телефон</a><a href="#/denied">заборонено</a><a href="#/solved">фінал</a>
   </nav>
@@ -26,6 +27,18 @@
   <a href="#/phone" id="navPhone" hidden>Телефон</a>
   <a href="#/solved" id="navSolved" hidden>Доповідь</a>
 </nav>
+
+<!-- ЕКРАН: «Справа готується» (до відкриття набору ведучим) -->
+<section id="screen-prelaunch" class="screen paper-world" hidden>
+  <div class="sheet cover-sheet">
+    <span class="stamp big">Секретно</span>
+    <div class="emblem">✦</div>
+    <p class="case-no">Детективний клуб · вх. № 003-А</p>
+    <h1>Справа № 003<br>готується</h1>
+    <p class="lede">Матеріали проходять засекречення. Набір спецгрупи ще не відкрито.</p>
+    <p class="lede warn">Збережіть це посилання. Щойно все буде готово — тут з'явиться виклик<span class="dots"></span></p>
+  </div>
+</section>
 
 <!-- ЕКРАН: Лендінг -->
 <section id="screen-landing" class="screen paper-world" hidden>
@@ -158,7 +171,7 @@
     <h2>Справа офіцера <span class="blk w6"></span></h2>
 
     <div id="dossierBody">
-      <p>Майор <span class="blk w5"></span> <span class="blk w4"></span>, 12 квітня, о <span class="blk w2"></span>:<span class="blk w2"></span> знайдений <span class="blk w7"></span> за адресою: <strong class="visible-key" id="addrLine">м. Суми, пр-т М. Лушпи, 42/1, ТРЦ Sumy Plaza — Zoo House &amp; CO</strong>.</p>
+      <p>Майор <span class="blk w5"></span> <span class="blk w4"></span>, 12 квітня, о <span class="blk w2"></span>:<span class="blk w2"></span> знайдений <span class="blk w7"></span> за адресою: <strong class="visible-key" id="addrLine">м. Суми, пр-т М. Лушпи, 42/1, ТРЦ Sumy Plaza — Zoo House &amp; CO</strong>. Усі документи по справі передано на зберігання довіреній особі — <strong class="visible-key">Агент П</strong>.</p>
       <p>Тіло та документи вивезені <span class="blk w9"></span>. Свідок: <span class="blk w5"></span>. Мотив: <span class="blk w8"></span>.</p>
       <p>Висновок відділу: <span class="blk w9"></span> <span class="blk w6"></span> <span class="blk w7"></span>.</p>
       <blockquote class="letter">«Поліція закрила справу за тиждень. Ніхто не шукає. Я заплачу́, скільки скажете, — тільки знайдіть, хто це зробив. — О.»</blockquote>
@@ -239,9 +252,9 @@
       </div>
       <div class="ph-notif">
         <p class="ph-app">🗒 Нотатки</p>
-        <p class="mono-note">Т-1: Баня на Блакитних — 990 м</p>
+        <p class="mono-note">Т-1: Баня на Блакитних — 995 м</p>
         <p class="mono-note">Т-2: Агент П — 660 м</p>
-        <p class="mono-note">Т-3: Баня на Заливній — 1000 м</p>
+        <p class="mono-note">Т-3: Баня на Заливній — 1010 м</p>
       </div>
     </div>
   </div>

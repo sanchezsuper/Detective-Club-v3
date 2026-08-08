@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Візитки-запрошення — справа № 003</title>
+<style>
+  * { box-sizing: border-box; }
+  body {
+    background: #8a7a5c; margin: 0; padding: 2.5rem 1rem;
+    display: flex; flex-direction: column; align-items: center; gap: 1.2rem;
+    font-family: 'Courier New', monospace;
+  }
+  .hint { color: #efe5cc; font-size: .8rem; max-width: 44rem; text-align: center; }
+  .sheet { display: grid; grid-template-columns: repeat(2, auto); gap: 5mm; background: #fff; padding: 8mm; box-shadow: 0 10px 30px rgba(30,22,8,.45); }
+  .card {
+    width: 90mm; height: 50mm; display: flex;
+    background:
+      radial-gradient(ellipse at 80% 15%, rgba(139,109,31,.14), transparent 45%),
+      linear-gradient(174deg, #f4edd9 0%, #efe5cc 55%, #eadfc2 100%);
+    border: 1.5px dashed #999; padding: 4mm 4.5mm; gap: 3.5mm;
+    color: #241f14; align-items: center;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .left { flex: 1; display: flex; flex-direction: column; justify-content: center; }
+  .club { margin: 0 0 1.2mm; font-size: 7pt; letter-spacing: .26em; color: #6b5d3f; }
+  .invite { margin: 0; font-size: 8.5pt; letter-spacing: .1em; text-transform: uppercase; }
+  .case { margin: .6mm 0 2mm; font-size: 13.5pt; font-weight: 700; letter-spacing: .12em; }
+  .tease { margin: 0 0 2mm; font-size: 6.8pt; line-height: 1.55; color: #4a4130; }
+  .warn { margin: 0; font-size: 5.4pt; letter-spacing: .14em; color: #a8322a; }
+  .right { flex: none; text-align: center; }
+  .right img { width: 30mm; height: 30mm; display: block; border: 1px solid #241f14; }
+  .scan { margin: 1.2mm 0 0; font-size: 6pt; letter-spacing: .3em; color: #6b5d3f; }
+  @media print {
+    body { background: #fff; padding: 0; }
+    .hint { display: none; }
+    .sheet { box-shadow: none; margin: 6mm auto; }
+    @page { size: A4 portrait; margin: 8mm; }
+  }
+</style>
+</head>
+<body>
+<p class="hint">Візитки-запрошення 90×50 мм, 10 шт на аркуші. Друк: Ctrl+P, масштаб 100%, увімкнути «фонові кольори». Вирізати по пунктиру. QR веде на сайт справи — поки набір закритий, гості бачать «Справа № 003 готується»; щойно натиснете «Набір: ВІДКРИТО» в панелі ведучого — у всіх з'явиться запрошення подати заявку.</p>
+<div class="sheet">
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="left">
+          <p class="club">✦ ДЕТЕКТИВНИЙ КЛУБ</p>
+          <p class="invite">Вас викликано</p>
+          <p class="case">СПРАВА № 003</p>
+          <p class="tease">Поліція закрила справу за тиждень.<br>Ми — ні. Нам потрібні ви.</p>
+          <p class="warn">КОНФІДЕНЦІЙНО · РОЗГОЛОШЕННЯ КАРАЄТЬСЯ</p>
+        </div>
+        <div class="right">
+          <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAXIAAAFyCAIAAABnRsZeAAAHq0lEQVR4nO3dsW0kyxVAUVFgNnKUgKL/CcgRmAO9zUAurTJ+3cKrbp7jLmame3p4UcbD248/31//AOj8c/oCgLeRFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQOxz58X/+vd/quu4xP/++9fiX9f3u/PaJzr3XZ1z7qp+2/Ndc1oBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbU7ZrU5OUazvTkHfOlU7d0Y5z77y+o6kn+L6/hTWnFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUgdnDKdm1qzvKcOz93/T3vPIU7t7eemzk+531/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BsbMr2iXZ2nd65vXXtiXt/pzYK85PTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQM2Wb+W3znXfe0dR0Lz85rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsbEpWxONP01Nf57bzruzYXfqqqbceVU7nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdv1vOP73Dk5+sTXTjl3zb/tb8FpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIffz5/pq+hse4c1Zyatr1fd/Gzjvzk9MKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChDbmrKd2ld6bsfqjjt3u56bK33i/O7Ub+Occ9/zzjs7rQAxWQFisgLEZAWIyQoQkxUgJitATFaAmKwAsc+pD56a0bxzFnbtiRO67/sm73wKO1d17pqdVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2NaU7Z3bas+98xOv6pxzV3XuKexMrN7pzslgpxUgJitATFaAmKwAMVkBYrICxGQFiMkKEJMVIPbx5/vrb794apJyx/smg9emtsau3TnrvMNV/eS0AsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEtqZs16ZmQ++cSX3fHtzfds1rd24UXjv3m3RaAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFiB6dsz7lzznJtaq50bWqa+U7ndui+b6p4zWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYh9Tn3wnVtUz9m55junP9eeuOl2x51ztOee75rTChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQO7jL9s7dn1MTund+7hNnjn/bDt0ncloBYrICxGQFiMkKEJMVICYrQExWgJisADFZAWJbu2yfOEc7NbE6tVV07c6Ns3dOnd75e16zyxZ4CVkBYrICxGQFiMkKEJMVICYrQExWgJisALGDu2zX7pyznNpWe8777mjtffd7bnevKVvgMWQFiMkKEJMVICYrQExWgJisADFZAWKyAsQO7rKdMjWVeOeG3XP7d9emNrCe+57v3FZ77n53OK0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALFLd9muTU003rkn9c77XZuaDZ2adb5zc/M5TitATFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQGxryvaJ851rUxtY3zffeecTfN9VTf1i15xWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoDY59QH3zmTes4T73fnmt+3b/jcE9x57Z1/C04rQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0Bsa8p2amL13FTiuTu6c+Psjqm9sOfcuff3iTuhnVaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjYLts7t7feaerbsJ/1p6ktuU/ktALEZAWIyQoQkxUgJitATFaAmKwAMVkBYrICxD7+fH/97Refmw6cmu9c+23zu1P7d+/8XU2Z+iZ3PtdpBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIbU3Z/jZT0707nnhVO+6cG16783dlyha4iKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjnzovv3P2549ze0KkNu1PbTN/321ib2ux759yw0woQkxUgJitATFaAmKwAMVkBYrICxGQFiMkKENuasl07N8O3486p0zs3zu64c/PrOec+94nfpNMKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChA7OGW7duf/dL82NaG7ducW1Z13vtPUNe88hamZY6cVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSA2NmX7RDsbZ89N6E7NK09NnU5N9z7xKZiyBV5CVoCYrAAxWQFisgLEZAWIyQoQkxUgJitAzJRtZmqicce5Gc1zs7B3XjM/Oa0AMVkBYrICxGQFiMkKEJMVICYrQExWgJisALGxKdv3TTSe25O689qdqzq3n3VqD+6Oqec79c47nFaAmKwAMVkBYrICxGQFiMkKEJMVICYrQExWgNjBKdsnTlKuPfGOzu2U3TG16Xbnnc9NM6+d29177p2dVoCYrAAxWQFisgLEZAWIyQoQkxUgJitATFaA2Mef76/pawBexWkFiMkKEJMVICYrQExWgJisADFZAWKyAsRkBYjJChCTFSAmK0BMVoCYrAAxWQFisgLEZAWIyQoQkxUg9n9K2f/MQ9jcyAAAAABJRU5ErkJggg==" alt="QR">
+          <p class="scan">СКАНУЙ</p>
+        </div>
+      </div>
+</div>
+</body>
+</html>
