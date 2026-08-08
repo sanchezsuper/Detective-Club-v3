@@ -379,6 +379,16 @@ h2 { font-size: 1.2rem; }
   animation: ticker-run 60s linear infinite;
 }
 
+/* Вуаль першого з'єднання (статус набору ще летить з бази) */
+#bootVeil {
+  position: fixed; inset: 0; z-index: 60;
+  background: var(--paper, #efe7d4);
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: .6rem; font-family: var(--mono); font-size: .72rem;
+  letter-spacing: .18em; text-transform: uppercase; color: var(--muted);
+}
+#bootVeil .emblem { font-size: 1.6rem; color: var(--stamp); }
+
 /* Нижні вкладки детектива */
 #gameNav {
   position: fixed; left: 0; right: 0; bottom: 0; z-index: 45;

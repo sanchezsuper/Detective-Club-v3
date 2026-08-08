@@ -58,7 +58,12 @@ let hostPending = !!hostParam; // true, поки асинхронно перев
 /* ---------- Спільне лобі (Firebase RTDB, опційно) ----------
    Дані живуть під /rooms/case003: players/<id> + game/startedAt.
    Все нижче — за guard'ом sync.on: без конфігу жодного ефекту. */
-const sync = { on: false, room: null, offset: 0, players: null, sawSelf: false, resetting: false, prelaunch: false };
+const sync = {
+  on: false, room: null, offset: 0, players: null, sawSelf: false, resetting: false, prelaunch: false,
+  // Статус набору «відомий» одразу лише без Firebase; інакше чекаємо
+  // першої відповіді бази (вуаль замість блимання лендінга)
+  gateKnown: !(typeof firebase !== 'undefined' && window.FIREBASE_CONFIG),
+};
 
 function syncInit() {
   if (typeof firebase === 'undefined' || !window.FIREBASE_CONFIG) return;
@@ -67,9 +72,16 @@ function syncInit() {
     sync.room = firebase.database().ref('rooms/case003');
   } catch (err) {
     console.warn('Firebase недоступний, працюю автономно:', err);
+    sync.gateKnown = true;
+    route();
     return;
   }
   sync.on = true;
+
+  // Страховка вуалі: якщо база не відповіла за 2.5 с — показуємо як є
+  setTimeout(() => {
+    if (!sync.gateKnown) { sync.gateKnown = true; route(); }
+  }, 2500);
 
   // Поправка на розбіжність годинника клієнта з сервером
   firebase.database().ref('.info/serverTimeOffset').on('value', (sn) => {
@@ -90,6 +102,7 @@ function syncInit() {
   // у гостей екран змінюється наживо без оновлення сторінки
   sync.room.child('prelaunch').on('value', (sn) => {
     sync.prelaunch = !!sn.val();
+    sync.gateKnown = true;
     updateHostGate();
     route();
   });
@@ -186,6 +199,15 @@ function route() {
 
   // Охорона маршрутів (ведучий ходить вільно)
   const s = load();
+
+  // Статус набору ще летить з бази: гостям — вуаль, без блимання лендінга
+  const veil = !isHost && !s.name && !sync.gateKnown;
+  $('#bootVeil').hidden = !veil;
+  if (veil) {
+    SCREENS.forEach((id) => { $('#screen-' + id).hidden = true; });
+    return;
+  }
+
   if (!isHost) {
     // Набір ще не відкрито: гості з візиток бачать «справа готується».
     // Зареєстрованих (та ведучого) заглушка не стосується.
