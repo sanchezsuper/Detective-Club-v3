@@ -105,7 +105,7 @@
   .shot.fit { height: 200px; object-fit: contain; background: #e9e0c6; }
   @media (max-width: 899px) { .shot.fit { height: 170px; } }
   .shot.ph { height: 300px; object-fit: cover; object-position: center 32%; }
-  @media (max-width: 899px) { .shot.ph { height: 260px; } .shot.team { max-height: 60vh; } }
+  @media (max-width: 899px) { .shot.ph { height: 260px; } }
   .cap { font-family: var(--mono); font-size: .66rem; letter-spacing: .08em; color: var(--muted); margin-top: .45rem; text-transform: uppercase; }
   .row { display: flex; gap: .7rem; }
   .row > * { flex: 1; min-width: 0; }
@@ -118,9 +118,7 @@
   .digits span { background: #e5dabb; padding: .25rem .5rem; border: 1px dashed #b7a67c; }
   .kv { font-family: var(--mono); font-size: .82rem; margin: .18rem 0; }
   .kv b { color: var(--red); }
-  .zoo-big { width: 100%; max-width: 190px; height: auto; object-fit: contain; background: #fff; border-radius: 14px; padding: .5rem; box-shadow: 0 4px 12px rgba(40,25,8,.22); }
-
-  /* мапа з позначками */
+    /* мапа з позначками */
   .map-wrap { position: relative; display: block; line-height: 0; }
   .mk { position: absolute; transform: translate(-50%, -50%); display: flex; align-items: center; gap: .3rem; line-height: 1; z-index: 2; white-space: nowrap; }
   .mk-dot {
@@ -146,7 +144,16 @@
   .legend { font-family: var(--mono); font-size: .68rem; letter-spacing: .06em; color: var(--muted); margin-top: .5rem; }
   .legend .lg { display: inline-block; width: 10px; height: 10px; border-radius: 50%; margin-right: .2rem; vertical-align: -1px; }
   .legend .lg-g { background: #2e7d32; } .legend .lg-r { background: var(--red); }
-  .shot.team { max-height: 70vh; width: auto; max-width: 100%; margin: 0 auto; }
+  .shot.team { width: 100%; height: auto; max-height: none; }
+  .node.flush { padding-left: .5rem; padding-right: .5rem; }
+  .node.flush h2, .node.flush .sub, .node.flush .cap { padding: 0 .65rem; }
+  .logo-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .logo-card h2 { margin-bottom: .8rem; }
+  .logo-big {
+    width: 100%; max-width: 210px; height: auto; object-fit: contain;
+    background: #fff; border-radius: 14px; padding: .6rem;
+    box-shadow: 0 4px 12px rgba(40,25,8,.22);
+  }
   .coords {
     font-family: var(--mono); font-size: .84rem; word-break: break-all; background: #e7dcbd;
     border: 1px dashed #b7a67c; padding: .5rem .6rem; text-align: center; letter-spacing: .02em;
@@ -173,20 +180,22 @@
   @media (min-width: 900px) {
     .n1  { grid-column: 1 / span 6;  }
     .n2  { grid-column: 7 / span 6;  }
-    .n3  { grid-column: 1 / span 5;  }
-    .n4  { grid-column: 6 / span 7;  }
+    .n3  { grid-column: 1 / span 4;  }
+    .n4  { grid-column: 5 / span 8;  }
     .n5  { grid-column: 1 / span 8;  }
     .n6  { grid-column: 9 / span 4;  }
-    .n7  { grid-column: 1 / span 4;  }
-    .n8  { grid-column: 5 / span 4;  }
-    .n9  { grid-column: 9 / span 4;  }
-    .n10 { grid-column: 1 / span 12; }
-    .n11 { grid-column: 1 / span 7;  }
-    .n12 { grid-column: 8 / span 5;  }
-    .n13 { grid-column: 1 / span 4;  }
-    .n14 { grid-column: 5 / span 4;  }
-    .n15 { grid-column: 9 / span 4;  }
-    .n16 { grid-column: 3 / span 8;  }
+    .n7  { grid-column: 1 / span 8;  }
+    .n8  { grid-column: 9 / span 4;  }
+    .n9  { grid-column: 1 / span 4;  }
+    .n10 { grid-column: 5 / span 4;  }
+    .n11 { grid-column: 9 / span 4;  }
+    .n12 { grid-column: 1 / span 12; }
+    .n13 { grid-column: 1 / span 7;  }
+    .n14 { grid-column: 8 / span 5;  }
+    .n15 { grid-column: 1 / span 4;  }
+    .n16 { grid-column: 5 / span 4;  }
+    .n17 { grid-column: 9 / span 4;  }
+    .n18 { grid-column: 4 / span 5;  }
   }
   @media (max-width: 899px) {
     .board { grid-template-columns: 1fr; gap: 2.2rem; padding: 1rem .9rem 2.5rem; }
@@ -195,53 +204,6 @@
     .board .node > .pin { left: 26px; transform: none; }
     .step { left: auto; right: -8px; }
   }
-
-  /* ---------- Стіна коментарів ---------- */
-  .wall-wrap { max-width: 1360px; margin: 0 auto; padding: 1rem 1.2rem 4rem; position: relative; z-index: 2; }
-  .wall-head { text-align: center; margin-bottom: 1.6rem; }
-  .wall-head h2 {
-    font-family: var(--mono); text-transform: uppercase; letter-spacing: .16em; color: #fdf7e6;
-    font-size: clamp(1.1rem, 3.4vw, 1.5rem); margin: 0; text-shadow: 0 2px 6px rgba(0,0,0,.35);
-  }
-  .wall-head p { color: #fbf3df; margin: .5rem 0 0; text-shadow: 0 1px 3px rgba(0,0,0,.35); font-size: .95rem; }
-  form.wall-form {
-    background: var(--paper); border: 1px solid #ddd0ae; padding: 1rem; max-width: 620px; margin: 0 auto 2rem;
-    box-shadow: 0 10px 22px rgba(40,25,8,.32);
-  }
-  form.wall-form label { display: block; font-family: var(--mono); font-size: .66rem; letter-spacing: .14em; text-transform: uppercase; color: var(--muted); margin-bottom: .25rem; }
-  form.wall-form input[type=text], form.wall-form textarea {
-    width: 100%; font-family: var(--serif); font-size: .95rem; padding: .5rem .6rem;
-    border: 1px solid #c8bb99; background: #fbf6e8; color: var(--ink); margin-bottom: .7rem; border-radius: 2px;
-  }
-  form.wall-form textarea { resize: vertical; min-height: 74px; }
-  .stickers { display: flex; flex-wrap: wrap; gap: .35rem; margin-bottom: .8rem; }
-  .stickers button {
-    font-size: 1.25rem; line-height: 1; background: #fbf6e8; border: 1px solid #c8bb99;
-    padding: .3rem .45rem; cursor: pointer; border-radius: 3px;
-  }
-  .stickers button.sel { background: var(--red); border-color: var(--red); box-shadow: 0 0 0 2px rgba(179,36,28,.25); }
-  .wall-form .send {
-    background: var(--ink); color: var(--paper); border: none; font-family: var(--mono);
-    letter-spacing: .14em; text-transform: uppercase; font-size: .74rem; padding: .6rem 1.1rem; cursor: pointer;
-  }
-  .wall-form .send:hover { background: var(--red); }
-  .wall-msg { font-family: var(--mono); font-size: .72rem; color: var(--red); margin: .5rem 0 0; }
-  .notes { display: grid; grid-template-columns: repeat(auto-fill, minmax(210px, 1fr)); gap: 1.5rem 1.2rem; }
-  .note {
-    position: relative; padding: 1.5rem 1rem 1rem; min-height: 150px;
-    box-shadow: 0 8px 16px rgba(40,25,8,.3); font-family: var(--serif);
-    display: flex; flex-direction: column;
-  }
-  .note .pin { top: -10px; }
-  .note .sticker { position: absolute; top: -14px; right: 8px; font-size: 2rem; transform: rotate(11deg); filter: drop-shadow(0 2px 3px rgba(0,0,0,.28)); }
-  .note .txt { flex: 1; font-size: .95rem; word-wrap: break-word; overflow-wrap: anywhere; }
-  .note .who { font-family: var(--mono); font-size: .68rem; letter-spacing: .1em; text-transform: uppercase; color: rgba(0,0,0,.55); margin-top: .7rem; }
-  .note .kill {
-    position: absolute; bottom: 6px; right: 6px; background: none; border: 1px solid var(--red);
-    color: var(--red); font-family: var(--mono); font-size: .62rem; padding: .1rem .3rem; cursor: pointer; border-radius: 2px;
-  }
-  .note .kill:hover { background: var(--red); color: #fff; }
-  .wall-empty { color: #fbf3df; text-align: center; font-family: var(--mono); font-size: .8rem; letter-spacing: .1em; text-shadow: 0 1px 3px rgba(0,0,0,.35); }
 
   footer.bot { text-align: center; padding: 0 1.2rem 3rem; color: #f6ecd6; font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
   footer.bot a { color: #ffe9c9; }
@@ -264,7 +226,6 @@
   <span class="solved-stamp">Справу розкрито</span>
   <div class="toolbar">
     <button id="threadsBtn" type="button">Нитки: увімкнено</button>
-    <a href="#wall">До коментарів ↓</a>
     <a href="./" target="_blank" rel="noopener">Сайт справи ↗</a>
   </div>
 </header>
@@ -288,8 +249,15 @@
     <p class="mono">Відповідь: <span class="hot">ТАЄМНИЦЯ / СЕКРЕТ</span></p>
   </article>
 
-  <article class="node n3 t2 dark" data-step="3">
+  <article class="node n3 t2 logo-card" data-step="3">
     <span class="pin"></span><span class="step">03</span>
+    <p class="sub">Початок зустрічі</p>
+    <h2>Збір групи</h2>
+    <img class="logo-big" loading="lazy" src="props/board/sam-market.jpg" alt="САМ-Маркет">
+  </article>
+
+  <article class="node n4 t2 dark" data-step="4">
+    <span class="pin"></span><span class="step">04</span>
     <p class="sub">SLUZHBA-X SECURE GATEWAY v2.4</p>
     <h2>Термінал</h2>
     <p class="mono">&gt; LOGIN: <span style="color:#e8ffe9">СОКІЛ</span><br>&gt; PASSWORD: <span style="color:#e8ffe9">2482</span></p>
@@ -297,23 +265,23 @@
     <p class="mono" style="font-size:.78rem">&gt; ДОСТУП НАДАНО. СПРАВУ № 003 ЗНАЙДЕНО В АРХІВІ.</p>
   </article>
 
-  <article class="node n4 t1" data-step="4">
-    <span class="pin"></span><span class="step">04</span>
+  <article class="node n5 t1" data-step="5">
+    <span class="pin"></span><span class="step">05</span>
     <p class="sub">Місце події</p>
-    <h2>Sumy Plaza · Zoo House &amp; CO</h2>
-    <div class="row" style="align-items:center">
-      <div style="flex:1.6">
-        <img class="shot ph" loading="lazy" src="props/board/loc-start.jpg" data-cap="Виїзд на місце події" alt="Група на місці події">
-        <p class="cap">Виїзд групи · місце злочину</p>
-      </div>
-      <div style="flex:1;text-align:center">
-        <img class="zoo-big" loading="lazy" src="props/board/zoo-house.jpg" alt="Zoo House &amp; CO">
-      </div>
-    </div>
+    <h2>ТРЦ Sumy Plaza</h2>
+    <img class="shot ph" loading="lazy" src="props/board/loc-start.jpg" data-cap="Виїзд на місце події" alt="Група на місці події">
+    <p class="cap">Виїзд групи · місце злочину</p>
   </article>
 
-  <article class="node n5 t4" data-step="5">
-    <span class="pin"></span><span class="step">05</span>
+  <article class="node n6 t3 logo-card" data-step="6">
+    <span class="pin"></span><span class="step">06</span>
+    <p class="sub">Довірена особа</p>
+    <h2>Агент П</h2>
+    <img class="logo-big" loading="lazy" src="props/board/zoo-house.jpg" alt="Zoo House &amp; CO">
+  </article>
+
+  <article class="node n7 t4" data-step="7">
+    <span class="pin"></span><span class="step">07</span>
     <p class="sub">Речові докази</p>
     <h2>Три числа з місця злочину</h2>
     <div class="row">
@@ -332,8 +300,8 @@
     </div>
   </article>
 
-  <article class="node n6 t1" data-step="6">
-    <span class="pin"></span><span class="step">06</span>
+  <article class="node n8 t1" data-step="8">
+    <span class="pin"></span><span class="step">08</span>
     <p class="sub">Розсекречення</p>
     <h2>PIN</h2>
     <div class="digits"><span>2147</span><span>+ 53</span><span>+ 12</span></div>
@@ -341,8 +309,8 @@
     <p style="font-size:.88rem">Порядок підказали номери на бирках. Чорні блоки в досьє зникли — і з'явилася записка <span class="mono">117-С</span>: майор Роман Гайдук, 19.08.1978, напрям «ГЛИБИНА».</p>
   </article>
 
-  <article class="node n7 t3" data-step="7">
-    <span class="pin"></span><span class="step">07</span>
+  <article class="node n9 t3" data-step="9">
+    <span class="pin"></span><span class="step">09</span>
     <p class="sub">Пастка</p>
     <h2>«Блокування, не переходь!»</h2>
     <img class="shot ph" loading="lazy" src="props/board/trap-scan.jpg" data-cap="Хтось таки відсканував заборонений QR" alt="Сканування QR-пастки">
@@ -350,8 +318,8 @@
     <p style="font-size:.88rem;margin-top:.5rem">На речдоках висіли наліпки з попередженням. Попередження, як відомо, читають після.</p>
   </article>
 
-  <article class="node n8 t2" data-step="8">
-    <span class="pin"></span><span class="step">08</span>
+  <article class="node n10 t2" data-step="10">
+    <span class="pin"></span><span class="step">10</span>
     <p class="sub">Речдок № 4</p>
     <h2>Мертвий телефон → СХОВИЩЕ-7</h2>
     <div class="row" style="align-items:flex-start">
@@ -364,8 +332,8 @@
     </div>
   </article>
 
-  <article class="node n9 t4" data-step="9">
-    <span class="pin"></span><span class="step">09</span>
+  <article class="node n11 t4" data-step="11">
+    <span class="pin"></span><span class="step">11</span>
     <p class="sub">Нотатки в телефоні</p>
     <h2>Периметр</h2>
     <p class="kv">Т-1 · Баня на Блакитних — <b>1000 м</b></p>
@@ -374,36 +342,33 @@
     <p style="font-size:.86rem;margin-top:.5rem">Три місця й три радіуси. Що з цим робити — ніде не написано.</p>
   </article>
 
-  <article class="node n10 t1" data-step="10">
-    <span class="pin"></span><span class="step">10</span>
+  <article class="node n12 t1" data-step="12">
+    <span class="pin"></span><span class="step">12</span>
     <p class="sub">Тріангуляція</p>
     <h2>Мапа, циркуль і трохи віри</h2>
     <div class="row" style="align-items:flex-start">
       <div style="flex:2.2">
         <div class="map-wrap">
-          <img class="shot" loading="lazy" src="props/board/map.jpg" data-cap="Мапа справи № 003 · зелений — збір групи, червоний — точка Х" alt="Мапа району з позначками">
-          <span class="mk mk-start" style="left:25.17%; top:83.15%">
-            <span class="mk-dot mk-logo"><img src="props/board/sam-market.jpg" alt="САМ-Маркет"></span><span class="mk-lbl">Збір групи</span>
+          <img class="shot" loading="lazy" src="props/board/map.jpg" data-cap="Мапа справи № 003 · червоним позначено точку Х" alt="Мапа району з позначками">
           </span>
           <span class="mk mk-x" style="left:52.73%; top:19.09%">
             <span class="mk-dot"></span><span class="mk-lbl">Точка Х</span>
           </span>
         </div>
-        <p class="legend"><i class="lg lg-g"></i> збір групи біля САМ-Маркета · <i class="lg lg-r"></i> тут копали —
+        <p class="legend"><i class="lg lg-r"></i> точка Х — тут копали:
           <a href="https://www.google.com/maps?q=50.92143334795645,34.832887139664116" target="_blank" rel="noopener">відкрити в картах ↗</a></p>
       </div>
       <div style="flex:1">
         <img class="shot ph" loading="lazy" src="props/board/map-work.jpg" data-cap="Робота з мапою: три кола, один перетин" alt="Робота з мапою">
         <p class="cap">Три кола · один перетин</p>
-        <p style="font-size:.88rem;margin-top:.7rem">Вулична частина почалася від <b>САМ-Маркета</b> — там зустрілися після онлайн-етапу.</p>
         <p style="font-size:.88rem">Далі — циркуль по паперовій мапі: 1000 м від однієї бані, 750 м від Агента П, 1125 м від другої. Три кола перетнулися в одній точці за річкою.</p>
         <p style="font-size:.86rem;color:var(--muted)">Шкала на мапі надрукована разом із нею — тому радіуси не збилися навіть після принтера.</p>
       </div>
     </div>
   </article>
 
-  <article class="node n11 t2" data-step="11">
-    <span class="pin"></span><span class="step">11</span>
+  <article class="node n13 t2" data-step="13">
+    <span class="pin"></span><span class="step">13</span>
     <p class="sub">Польові роботи</p>
     <h2>Розкопки</h2>
     <div class="row" style="align-items:flex-start">
@@ -418,8 +383,8 @@
     </div>
   </article>
 
-  <article class="node n12 t4" data-step="12">
-    <span class="pin"></span><span class="step">12</span>
+  <article class="node n14 t4" data-step="14">
+    <span class="pin"></span><span class="step">14</span>
     <p class="sub">Вміст контейнера</p>
     <h2>Знахідки</h2>
     <div class="row">
@@ -438,16 +403,16 @@
     </div>
   </article>
 
-  <article class="node n13 t1" data-step="13">
-    <span class="pin"></span><span class="step">13</span>
+  <article class="node n15 t1" data-step="15">
+    <span class="pin"></span><span class="step">15</span>
     <p class="sub">Твіст перший</p>
     <h2>Він живий</h2>
     <p>Документ мертвого існувати не може. Фото його. Ім'я нове. Дата видачі — <b class="hot">26.04</b>, через два тижні після власного вбивства.</p>
     <p style="font-size:.88rem">Майор інсценував свою смерть і пішов під іншим ім'ям: <span class="mono">ГАЙ МИРОН</span>.</p>
   </article>
 
-  <article class="node n14 t3" data-step="14">
-    <span class="pin"></span><span class="step">14</span>
+  <article class="node n16 t3" data-step="16">
+    <span class="pin"></span><span class="step">16</span>
     <p class="sub">Доповідь керівництву</p>
     <h2>Справу закрито</h2>
     <p>Номер знайденого посвідчення в рапорті 003-Р:</p>
@@ -456,8 +421,8 @@
     <p style="font-size:.86rem;margin-top:.6rem">Диспетчер: «Гарна робота. Відпочивайте.»</p>
   </article>
 
-  <article class="node n15 t2" data-step="15">
-    <span class="pin"></span><span class="step">15</span>
+  <article class="node n17 t2" data-step="17">
+    <span class="pin"></span><span class="step">17</span>
     <p class="sub">Твіст другий · епілог</p>
     <h2>Новина дня</h2>
     <div class="news">
@@ -467,35 +432,14 @@
     <p style="font-size:.86rem;margin-top:.55rem">Та сама хвилина, що на речдоку № 1. Він утік від усіх — крім випадковості. Правду знаєте тільки ви.</p>
   </article>
 
-  <article class="node n16 t1" data-step="16">
-    <span class="pin"></span><span class="step">16</span>
+  <article class="node n18 t1 flush" data-step="18">
+    <span class="pin"></span><span class="step">18</span>
     <p class="sub">Спецгрупа по справі № 003</p>
     <h2>Ті, хто це зробив</h2>
     <img class="shot team" loading="lazy" src="props/board/team-final.jpg" data-cap="Спецгрупа з посвідченням X-2604 і фото з газетою" alt="Команда зі знахідками">
     <p class="cap">У руках — посвідчення й фото, яких не мало існувати</p>
   </article>
 </main>
-
-<section class="wall-wrap" id="wall">
-  <div class="wall-head">
-    <h2>Записки на дошці</h2>
-    <p>Лишіть свій коментар — він з'явиться тут у всіх, хто відкриє сторінку.</p>
-  </div>
-
-  <form class="wall-form" id="wallForm" autocomplete="off">
-    <label for="wName">Ваше ім'я (або псевдонім)</label>
-    <input type="text" id="wName" maxlength="24" placeholder="напр. Детектив П" required>
-    <label for="wText">Коментар</label>
-    <textarea id="wText" maxlength="200" placeholder="Найкращий момент був, коли…" required></textarea>
-    <label>Стікер</label>
-    <div class="stickers" id="stickers"></div>
-    <button class="send" type="submit">Приколоти до дошки</button>
-    <p class="wall-msg" id="wallMsg" hidden></p>
-  </form>
-
-  <div class="notes" id="notes"></div>
-  <p class="wall-empty" id="wallEmpty" hidden>Поки що тихо. Будьте першим.</p>
-</section>
 
 <footer class="bot">
   Детективний клуб · справа № 003 · <a href="./" target="_blank" rel="noopener">сайт справи</a>
