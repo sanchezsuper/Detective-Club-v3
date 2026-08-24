@@ -92,8 +92,8 @@
   .node-head .sub { margin-bottom: .1rem; }
   .node-head h2 { margin: 0; }
   .ico { width: 50px; height: 50px; flex: none; filter: drop-shadow(0 2px 3px rgba(40,25,8,.3)); }
-  .shot.full { width: 100%; height: 500px; object-fit: cover; object-position: center 58%; }
-  @media (max-width: 899px) { .shot.full { height: 380px; } }
+  .shot.full { width: 100%; height: 400px; object-fit: cover; object-position: center 46%; }
+  @media (max-width: 899px) { .shot.full { height: 320px; } }
   .node p.quote-big {
     font-family: var(--serif); font-size: clamp(1.15rem, 2.6vw, 1.5rem); line-height: 1.45;
     font-style: italic; color: var(--ink); text-align: center; margin-top: .9rem;
@@ -118,6 +118,7 @@
   .shot.fit { height: 200px; object-fit: contain; background: #e9e0c6; }
   @media (max-width: 899px) { .shot.fit { height: 170px; } }
   .shot.ph { height: 300px; object-fit: cover; object-position: center 32%; }
+  .shot.ph.low { object-position: center 47%; }
   @media (max-width: 899px) { .shot.ph { height: 260px; } }
   .cap { font-family: var(--mono); font-size: .66rem; letter-spacing: .08em; color: var(--muted); margin-top: .45rem; text-transform: uppercase; }
   .row { display: flex; gap: .7rem; }
@@ -161,6 +162,8 @@
   .node.flush { padding-left: .5rem; padding-right: .5rem; }
   .node.flush h2, .node.flush .sub, .node.flush .cap { padding: 0 .65rem; }
   .logo-card { display: flex; flex-direction: column; align-items: center; text-align: center; }
+  .logo-card .logo-big { margin-top: auto; margin-bottom: auto; }
+  @media (min-width: 900px) { .n5, .n6 { align-self: stretch; } }
   .logo-card h2 { margin-bottom: .8rem; }
   .logo-big {
     width: 100%; max-width: 210px; height: auto; object-fit: contain;
@@ -196,7 +199,7 @@
     .n3  { grid-column: 1 / span 4;  }
     .n4  { grid-column: 5 / span 8;  }
     .n5  { grid-column: 1 / span 4;  }
-    .n6  { grid-column: 5 / span 4;  }
+    .n6  { grid-column: 5 / span 3;  }
     .n7  { grid-column: 1 / span 8;  }
     .n8  { grid-column: 9 / span 4;  }
     .n9  { grid-column: 1 / span 4;  }
@@ -292,7 +295,7 @@
     <p class="sub">На місці зустрічі</p>
     <h2>Розгадка паролю</h2>
     <img class="shot full" loading="lazy" src="props/board/loc-start.jpg" data-cap="Розгадка паролю на місці зустрічі" alt="Група розгадує пароль">
-    <p class="quote-big">«Саша б не поставив русню»<span class="who">(с)</span></p>
+    <p class="quote-big">«Саша б не поставив …»<span class="who">(с)</span></p>
   </article>
 
   <article class="node n6 t3 logo-card" data-step="6">
@@ -430,11 +433,11 @@
     </div>
     <div class="row" style="align-items:flex-start">
       <div>
-        <img class="shot ph" loading="lazy" src="props/board/dig-1.jpg" data-cap="Розкопки в точці Х" alt="Розкопки">
+        <img class="shot ph low" loading="lazy" src="props/board/dig-1.jpg" data-cap="Розкопки в точці Х" alt="Розкопки">
         <p class="cap">«Тут? Точно тут?»</p>
       </div>
       <div>
-        <img class="shot ph" loading="lazy" src="props/board/dig-2.jpg" data-cap="Контейнер знайдено" alt="Знайшли контейнер">
+        <img class="shot ph low" loading="lazy" src="props/board/dig-2.jpg" data-cap="Контейнер знайдено" alt="Знайшли контейнер">
         <p class="cap">Знайшли</p>
       </div>
     </div>
