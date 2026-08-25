@@ -41,7 +41,10 @@ function drawThreads() {
     // майже вертикальна нитка (мобільна стрічка): вертикальний sag непомітний,
     // тому відводимо середину вбік — виходить жива провисла петля
     if (Math.abs(b.x - a.x) < 40) {
-      mx += (i % 2 ? 40 : 26);
+      // провисає в бік корка (ліворуч від картки), але не за межі дошки
+      const want = i % 2 ? 40 : 26;
+      const room = Math.max(0, Math.min(a.x, b.x) - 6);
+      mx -= Math.min(want, room);
       my = (a.y + b.y) / 2;
     }
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
