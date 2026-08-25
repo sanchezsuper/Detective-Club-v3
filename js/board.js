@@ -36,8 +36,14 @@ function drawThreads() {
     const dist = Math.hypot(b.x - a.x, b.y - a.y);
     // провисання нитки під власною вагою
     const sag = Math.min(60, 14 + dist * 0.07);
-    const mx = (a.x + b.x) / 2;
-    const my = (a.y + b.y) / 2 + sag;
+    let mx = (a.x + b.x) / 2;
+    let my = (a.y + b.y) / 2 + sag;
+    // майже вертикальна нитка (мобільна стрічка): вертикальний sag непомітний,
+    // тому відводимо середину вбік — виходить жива провисла петля
+    if (Math.abs(b.x - a.x) < 40) {
+      mx += (i % 2 ? 40 : 26);
+      my = (a.y + b.y) / 2;
+    }
     const path = document.createElementNS('http://www.w3.org/2000/svg', 'path');
     path.setAttribute('d', `M ${a.x} ${a.y} Q ${mx} ${my} ${b.x} ${b.y}`);
     path.dataset.from = nodes[i].dataset.step;

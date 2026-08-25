@@ -116,10 +116,8 @@
   .shot { display: block; width: 100%; height: auto; border: 1px solid rgba(0,0,0,.16); cursor: zoom-in; background: #ddd; }
   .shot:hover { filter: brightness(1.05); }
   .shot.fit { height: 200px; object-fit: contain; background: #e9e0c6; }
-  @media (max-width: 899px) { .shot.fit { height: 170px; } }
   .shot.ph { height: 300px; object-fit: cover; object-position: center 32%; }
   .shot.ph.low { object-position: center 47%; }
-  @media (max-width: 899px) { .shot.ph { height: 260px; } }
   .cap { font-family: var(--mono); font-size: .66rem; letter-spacing: .08em; color: var(--muted); margin-top: .45rem; text-transform: uppercase; }
   .row { display: flex; gap: .7rem; }
   .row > * { flex: 1; min-width: 0; }
@@ -214,11 +212,20 @@
     .n18 { grid-column: 4 / span 5;  }
   }
   @media (max-width: 899px) {
-    .board { grid-template-columns: 1fr; gap: 2.2rem; padding: 1rem .9rem 2.5rem; }
+    .board { grid-template-columns: 1fr; gap: 2.2rem; padding: 1rem .7rem 2.5rem; }
     .node { transform: none !important; }
-    /* нитка йде лівим краєм, а не через текст */
-    .board .node > .pin { left: 26px; transform: none; }
+    /* нитка притиснута до лівого краю картки */
+    .board .node > .pin { left: 12px; transform: none; }
     .step { left: auto; right: -8px; }
+    /* двоколонкові блоки (мапа+фото, речдоки, знахідки, розкопки) — у стовпчик */
+    .row { flex-direction: column; gap: 1.1rem; }
+    .row > * { flex: none !important; width: 100%; }
+    .shot.ph { height: 300px; }
+    .shot.fit { height: 200px; }
+    .logo-big { max-width: 240px; }
+    /* маркер на мапі пропорційно менший */
+    .mk-dot { width: 18px; height: 18px; }
+    .mk-lbl { font-size: .52rem; padding: .15rem .3rem; }
   }
 
   footer.bot { text-align: center; padding: 0 1.2rem 3rem; color: #f6ecd6; font-family: var(--mono); font-size: .7rem; letter-spacing: .14em; text-transform: uppercase; opacity: .85; }
@@ -238,7 +245,7 @@
 <header class="top">
   <p class="case-no">Детективний клуб · закрита справа · доступ за посиланням</p>
   <h1>Справа офіцера<br>Романа Гайдука</h1>
-  <p class="lede">Поліція закрила справу за тиждень. Спецгрупа з шести детективів пройшла шлях від зачиненого архіву до схованки в землі — і знайшла те, чого не мало існувати.</p>
+  <p class="lede">Поліція закрила справу за тиждень. П'ять детективів пройшли шлях від зачиненого архіву до схованки в землі — і знайшла те, чого не мало існувати.</p>
   <span class="solved-stamp">Справу розкрито</span>
   <div class="toolbar">
     <button id="threadsBtn" type="button">Нитки: увімкнено</button>
@@ -262,8 +269,8 @@
     </svg>
       <div><p class="sub">Крок перший</p><h2>Вас викликано. Справа № 003</h2></div>
     </div>
-    <p class="avatars">🕵️ 🦊 🦉 🐺 🦅 🐈</p>
-    <p><b>П'ять детективів і ведучий.</b></p>
+    <p class="avatars">🦊 🦉 🐺 🦅 🐈</p>
+    <p><b>П'ять детективів.</b></p>
   </article>
 
   <article class="node n2 t3" data-step="2">
