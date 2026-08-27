@@ -143,6 +143,9 @@
     background: rgba(20,14,6,.86); color: #f7efdc; padding: .2rem .4rem; border-radius: 2px;
   }
   .mk-x .mk-dot { background: var(--red); animation: pulseX 1.9s ease-out infinite; }
+  a.mk { text-decoration: none; cursor: pointer; }
+  a.mk:hover .mk-dot { transform: scale(1.15); }
+  a.mk:hover .mk-lbl { background: #8e1a14; }
   .mk-x .mk-lbl { background: var(--red); color: #fff; font-weight: 700; }
   .mk-start .mk-dot { background: #fff; }
   .mk-logo { padding: 0; overflow: hidden; box-shadow: 0 2px 5px rgba(0,0,0,.45), 0 0 0 3px #2e7d32; width: 34px; height: 34px; }
@@ -163,6 +166,8 @@
   .logo-card .logo-big { margin-top: auto; margin-bottom: auto; }
   @media (min-width: 900px) { .n5, .n6 { align-self: stretch; } }
   .logo-card h2 { margin-bottom: .8rem; }
+  .node p.logo-note { font-family: var(--serif); font-style: italic; font-size: 1.02rem;
+    color: var(--ink); margin: .9rem 0 0; }
   .logo-big {
     width: 100%; max-width: 210px; height: auto; object-fit: contain;
     background: #fff; border-radius: 14px; padding: .6rem;
@@ -243,7 +248,7 @@
 <body>
 
 <header class="top">
-  <p class="case-no">Детективний клуб · закрита справа · доступ за посиланням</p>
+  <p class="case-no">Детективний клуб · закрита справа</p>
   <h1>Справа офіцера<br>Романа Гайдука</h1>
   <p class="lede">Поліція закрила справу за тиждень. П'ять детективів пройшли шлях від зачиненого архіву до схованки в землі — і знайшла те, чого не мало існувати.</p>
   <span class="solved-stamp">Справу розкрито</span>
@@ -267,7 +272,7 @@
       <circle cx="20" cy="19" r="14" fill="url(#gGlass)" stroke="#2f4a5c" stroke-width="3"/>
       <path d="M11 14a11 11 0 0 1 8-6" stroke="#fff" stroke-width="3" stroke-linecap="round" fill="none" opacity=".8"/>
     </svg>
-      <div><p class="sub">Крок перший</p><h2>Вас викликано. Справа № 003</h2></div>
+      <div><p class="sub">Крок перший</p><h2>Вас викликано.<br>Справа № 003</h2></div>
     </div>
     <p class="avatars">🦊 🦉 🐺 🦅 🐈</p>
     <p><b>П'ять детективів.</b></p>
@@ -310,6 +315,7 @@
     <p class="sub">Довірена особа</p>
     <h2>Агент П</h2>
     <img class="logo-big" loading="lazy" src="props/board/zoo-house.jpg" alt="Zoo House &amp; CO">
+    <p class="logo-note">«Дивне питання»</p>
   </article>
 
   <article class="node n7 t4" data-step="7">
@@ -348,7 +354,7 @@
     </div>
     <div class="digits"><span>2147</span><span>+ 53</span><span>+ 12</span></div>
     <p class="code-line">21475312</p>
-    <p style="font-size:.88rem">Порядок підказали номери на бирках. Чорні блоки в досьє зникли — і з'явилася записка <span class="mono">117-С</span>: майор Роман Гайдук, 19.08.1978, напрям «ГЛИБИНА».</p>
+    <p style="font-size:.88rem">Порядок підказали номери на бирках. Чорні блоки в досьє зникли — і з'явилася записка: майор Роман Гайдук, 19.08.1978, напрям «ГЛИБИНА».</p>
   </article>
 
   <article class="node n9 t3" data-step="9">
@@ -402,22 +408,23 @@
       <path d="M40.5 26l1.5 3.5-3.6-.8z" fill="#3a3a3f"/>
       <path d="M27.5 26l-1.5 3.5 3.6-.8z" fill="#3a3a3f"/>
     </svg>
-      <div><p class="sub">Тріангуляція</p><h2>Мапа, циркуль і трохи віри</h2></div>
+      <div><p class="sub">Тріангуляція</p><h2>Мапа, циркуль і трохи льохи</h2></div>
     </div>
     <div class="row" style="align-items:center">
-      <div style="flex:2.2">
-        <div class="map-wrap">
-          <img class="shot" loading="lazy" src="props/board/map.jpg" data-cap="Мапа справи № 003 · червоним позначено точку Х" alt="Мапа району з позначками">
-          <span class="mk mk-x" style="left:52.73%; top:19.09%">
-            <span class="mk-dot"></span><span class="mk-lbl">Точка Х</span>
-          </span>
-        </div>
-        <p class="legend"><i class="lg lg-r"></i> точка Х — тут копали:
-          <a href="https://www.google.com/maps?q=50.92143334795645,34.832887139664116" target="_blank" rel="noopener">відкрити в картах ↗</a></p>
-      </div>
       <div style="flex:1">
         <img class="shot ph" loading="lazy" src="props/board/map-work.jpg" data-cap="Робота з мапою: три кола, один перетин" alt="Робота з мапою">
         <p class="cap">Три кола · один перетин</p>
+      </div>
+      <div style="flex:2.2">
+        <div class="map-wrap">
+          <img class="shot" loading="lazy" src="props/board/map.jpg" data-cap="Мапа справи № 003 · червоним позначено точку Х" alt="Мапа району з позначками">
+          <a class="mk mk-x" style="left:52.73%; top:19.09%"
+             href="https://www.google.com/maps?q=50.92143334795645,34.832887139664116"
+             target="_blank" rel="noopener" title="Відкрити точку Х у Google Maps">
+            <span class="mk-dot"></span><span class="mk-lbl">Точка Х</span>
+          </a>
+        </div>
+        <p class="legend"><i class="lg lg-r"></i> точка Х — тут копали</p>
       </div>
     </div>
   </article>
@@ -482,7 +489,7 @@
     <span class="pin"></span><span class="step">16</span>
     <p class="sub">Доповідь керівництву</p>
     <h2>Справу закрито</h2>
-    <p>Номер знайденого посвідчення в рапорті 003-Р:</p>
+    <p>Номер знайденого посвідчення:</p>
     <p class="code-line">X-2604</p>
     <span class="stamp-red">Справу розкрито</span>
     <p style="font-size:.86rem;margin-top:.6rem">Диспетчер: «Гарна робота. Відпочивайте.»</p>
